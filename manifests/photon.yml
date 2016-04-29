@@ -1,0 +1,39 @@
+hosts:
+  - metadata:
+      MANAGEMENT_DATASTORE: mglab-lun-01
+      MANAGEMENT_PORTGROUP: pg-mglab-access-vlan-100-T
+      MANAGEMENT_NETWORK_NETMASK: 255.255.255.0
+      MANAGEMENT_NETWORK_DNS_SERVER: 192.168.10.1
+      MANAGEMENT_NETWORK_GATEWAY: 192.168.100.253
+      MANAGEMENT_VM_IPS: 192.168.100.11
+    address_ranges: 192.168.10.101
+    username: root
+    password: 1775TunTavernPA
+    usage_tags:
+      - CLOUD
+      - MGMT
+  - metadata:
+      MANAGEMENT_DATASTORE: mglab-lun-01
+      MANAGEMENT_PORTGROUP: pg-mglab-access-vlan-100-T
+      MANAGEMENT_NETWORK_NETMASK: 255.255.255.0
+      MANAGEMENT_NETWORK_DNS_SERVER: 192.168.10.1
+      MANAGEMENT_NETWORK_GATEWAY: 192.168.100.253
+      MANAGEMENT_VM_IPS: 192.168.100.12
+    address_ranges: 192.168.10.102
+    username: root
+    password: 1775TunTavernPA
+    usage_tags:
+      - CLOUD
+      - MGMT
+  - address_ranges: 192.168.10.104-192.168.10.106
+    username: root
+    password: 1775TunTavernPA
+    usage_tags:
+      - CLOUD
+deployment:
+  image_datastores:
+    - mglab-lun-01
+  auth_enabled: false
+  stats_enabled: false
+  use_image_datastore_for_vms: true
+  loadbalancer_enabled: true

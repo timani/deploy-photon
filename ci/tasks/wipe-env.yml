@@ -1,0 +1,12 @@
+---
+platform: linux
+image: docker:///virtmerlin/deploy-worker
+inputs:
+  - name: deploy-photon
+
+run:
+  path: deploy-photon/ci/tasks/wipe-env.sh
+params:
+  esx_user: {{esxuser}}
+  esx_passwd: {{esxpasswd}}
+  esx_hosts: [192.168.10.101,192.168.10.102]

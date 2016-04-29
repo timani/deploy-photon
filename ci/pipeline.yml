@@ -1,0 +1,19 @@
+resources:
+- name: deploy-photon
+  type: git
+  source:
+    uri: git@github.com:virtmerlin/deploy-photon.git
+    branch: master
+    private_key: {{githubsshkey}}
+
+jobs:
+- name: p0-WipeEnv
+  serial: true
+  max_in_flight: 1
+  serial_groups: [full]
+  plan:
+  - aggregate:
+    - get: deploy-photon
+      trigger: false
+  - task: wipe-env
+    file: deploy-photon/ci/tasks/wipe-env.yml
