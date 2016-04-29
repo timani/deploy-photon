@@ -6,8 +6,17 @@ resources:
     branch: master
     private_key: {{githubsshkey}}
 
+- name: photon-run-id
+  type: semver
+  source:
+    bucket: concourse-photon
+    key: concourse-run-semver-mglab
+    initial_version: 1.0.0
+    access_key_id: {{aws_id}}
+    secret_access_key: {{aws_key}}
+
 jobs:
-- name: p0-WipeEnv
+- name: WipeEnv-Only
   serial: true
   max_in_flight: 1
   serial_groups: [full]
@@ -28,3 +37,65 @@ jobs:
         esx_passwd: {{esx_passwd}}
         esx_hosts: {{esx_hosts}}
         wipe_arg: {{wipe_arg}}
+
+- name: p0-WipeEnv-Full
+  serial: true
+  max_in_flight: 1
+  serial_groups: [full]
+  plan:
+  - aggregate:
+    - get: deploy-photon
+      trigger: false
+    - get: photon-run-id
+      params: {bump: major}
+  - task: wipe-env
+    config:
+      platform: linux
+      image: docker:///virtmerlin/deploy-worker
+      inputs:
+        - name: deploy-photon
+      run:
+        path: deploy-photon/ci/tasks/wipe-env.sh
+      params:
+        esx_user: {{esx_user}}
+        esx_passwd: {{esx_passwd}}
+        esx_hosts: {{esx_hosts}}
+        wipe_arg: {{wipe_arg}}
+  - put: photon-run-id
+    params: {file: photon-run-id/number}
+
+- name: p1-task1-Deploy-Photon-Installer
+  serial: true
+  max_in_flight: 1
+  serial_groups: [full]
+  plan:
+  - get: photon-run-id
+    trigger: true
+    passed: [p0-WipeEnv-Full]
+  - get: deploy-photon
+    trigger: false
+  - task: p1-1-deploy-photon-ova
+    config:
+      platform: linux
+      image: docker:///virtmerlin/deploy-worker
+      inputs:
+        - name: deploy-photon
+      run:
+        path: deploy-photon/ci/tasks/deploy-photon-ova.sh
+      params:
+        esx_user: {{esx_user}}
+        esx_passwd: {{esx_passwd}}
+        esx_hosts: {{esx_hosts}}
+        wipe_arg: {{wipe_arg}}
+        ova_network: {{ova_network}}
+        ova_datastore: {{ova_datastore}}
+        ova_ip: {{ova_ip}}
+        ova_netmask: {{ova_netmask}}
+        ova_gateway: {{ova_gateway}}
+        ova_dns: {{ova_dns}}
+        ova_ntp: {{ova_ntp}}
+        ova_syslog: {{ova_syslog}}
+        ova_passwd: {{ova_passwd}}
+        ova_esx_user: {{ova_esx_user}}
+        ova_esx_passwd: {{ova_esx_passwd}}
+        ova_esx_host: {{ova_esx_host}}
