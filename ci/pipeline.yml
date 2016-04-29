@@ -23,8 +23,8 @@ jobs:
         - name: deploy-photon
       run:
         path: deploy-photon/ci/tasks/wipe-env.sh
-      args: [wipe]
       params:
         esx_user: {{esx_user}}
         esx_passwd: {{esx_passwd}}
         esx_hosts: {{esx_hosts}}
+        wipe_arg: {{wipe_arg}}

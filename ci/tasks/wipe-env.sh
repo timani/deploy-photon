@@ -1,6 +1,6 @@
 #!/bin/bash +x
 
-if [ $1 == "wipe" ];
+if [ $wipe_arg == "wipe" ];
         then
                 echo "Wiping Environment...."
         else
