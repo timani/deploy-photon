@@ -1,0 +1,5 @@
+./sethost.sh nuc-01 192.168.10.101 192.168.20.11 "1775TunTavernPA"
+./sethost.sh nuc-02 192.168.10.102 192.168.20.12 "1775TunTavernPA"
+./sethost.sh nuc-04 192.168.10.104 192.168.20.14 "1775TunTavernPA"
+./sethost.sh nuc-05 192.168.10.105 192.168.20.15 "1775TunTavernPA"
+./sethost.sh nuc-06 192.168.10.106 192.168.20.16 "1775TunTavernPA"
