@@ -27,4 +27,4 @@ jobs:
       params:
         esx_user: {{esx_user}}
         esx_passwd: {{esx_passwd}}
-        esx_hosts: "192.168.10.101,192.168.10.102"
+        esx_hosts: {{esx_hosts}}
