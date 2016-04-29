@@ -16,4 +16,15 @@ jobs:
     - get: deploy-photon
       trigger: false
   - task: wipe-env
-    file: deploy-photon/ci/tasks/wipe-env.yml
+    config:
+      platform: linux
+      image: docker:///virtmerlin/deploy-worker
+      inputs:
+        - name: deploy-photon
+      run:
+        path: deploy-photon/ci/tasks/wipe-env.sh
+      args: [wipe]
+      params:
+        esx_user: {{esx_user}}
+        esx_passwd: {{esx_passwd}}
+        esx_hosts: "192.168.10.101,192.168.10.102"
