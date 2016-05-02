@@ -99,3 +99,24 @@ jobs:
         ova_esx_user: {{ova_esx_user}}
         ova_esx_passwd: {{ova_esx_passwd}}
         ova_esx_host: {{ova_esx_host}}
+
+- name: p1-task2-Deploy-Photon
+  serial: true
+  max_in_flight: 1
+  serial_groups: [full]
+  plan:
+  - get: photon-run-id
+    trigger: true
+    passed: [p1-task1-Deploy-Photon-Installer]
+  - get: deploy-photon
+    trigger: false
+  - task: p1-2-deploy-photon
+    config:
+      platform: linux
+      image: docker:///virtmerlin/deploy-worker
+      inputs:
+        - name: deploy-photon
+      run:
+        path: deploy-photon/ci/tasks/deploy-photon.sh
+      params:
+        ova_ip: {{ova_ip}}

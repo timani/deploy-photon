@@ -1,0 +1,56 @@
+flavors:
+  # ephemeral disks
+  - name: pcf-2
+    kind: ephemeral-disk
+    cost:
+      - { key: "ephemeral-disk", value: 1.0, unit: "COUNT" }
+      - { key: "ephemeral-disk.capacity", value: 2.0, unit: "GB" }
+
+  - name: pcf-4
+    kind: ephemeral-disk
+    cost:
+      - { key: "ephemeral-disk", value: 1.0, unit: "COUNT" }
+      - { key: "ephemeral-disk.capacity", value: 4.0, unit: "GB" }
+
+  - name: pcf-20
+    kind: ephemeral-disk
+    cost:
+      - { key: "ephemeral-disk", value: 1.0, unit: "COUNT" }
+      - { key: "ephemeral-disk.capacity", value: 20.0, unit: "GB" }
+
+  - name: pcf-100
+    kind: ephemeral-disk
+    cost:
+      - { key: "ephemeral-disk", value: 1.0, unit: "COUNT" }
+      - { key: "ephemeral-disk.capacity", value: 100.0, unit: "GB" }
+
+
+  - name: pcf-16
+    kind: ephemeral-disk
+    cost:
+      - { key: "ephemeral-disk", value: 1.0, unit: "COUNT" }
+      - { key: "ephemeral-disk.capacity", value: 16.0, unit: "GB" }
+
+  - name: pcf-32
+    kind: ephemeral-disk
+    cost:
+      - { key: "ephemeral-disk", value: 1.0, unit: "COUNT" }
+      - { key: "ephemeral-disk.capacity", value: 32.0, unit: "GB" }
+
+  - name: pcf-64
+    kind: ephemeral-disk
+    cost:
+      - { key: "ephemeral-disk", value: 1.0, unit: "COUNT" }
+      - { key: "ephemeral-disk.capacity", value: 64.0, unit: "GB" }
+
+  - name: pcf-128
+    kind: ephemeral-disk
+    cost:
+      - { key: "ephemeral-disk", value: 1.0, unit: "COUNT" }
+      - { key: "ephemeral-disk.capacity", value: 128.0, unit: "GB" }
+
+  - name: pcf-256
+    kind: ephemeral-disk
+    cost:
+      - { key: "ephemeral-disk", value: 1.0, unit: "COUNT" }
+      - { key: "ephemeral-disk.capacity", value: 256.0, unit: "GB" }
