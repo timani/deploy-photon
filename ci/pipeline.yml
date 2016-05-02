@@ -11,6 +11,8 @@ resources:
   source:
     uri: git@github.com:vmware/bosh-photon-cpi-release.git
     branch: master
+    private_key: {{githubsshkey}}
+
 
 - name: photon-run-id
   type: semver
@@ -67,6 +69,7 @@ jobs:
         esx_passwd: {{esx_passwd}}
         esx_hosts: {{esx_hosts}}
         wipe_arg: {{wipe_arg}}
+        photon_manifest: {{photon_manifest}}
   - put: photon-run-id
     params: {file: photon-run-id/number}
 

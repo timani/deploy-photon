@@ -28,7 +28,7 @@ IFS=',' read -r -a ESX_HOSTS <<< "$esx_hosts"
         done
 
 #Clean DataStore(s)
-        for d in $(cat deploy-photon/manifests/photon/photon.yml | grep DATASTORE | awk -F ":" '{print $2}' |  tr "," "\n" | sort -u); do
+        for d in $(cat $deployment_manifest | grep DATASTORE | awk -F ":" '{print $2}' |  tr "," "\n" | sort -u); do
                 vifs --server $HOST --username $ESX_USER --password $ESX_PASSWD --rm  "[$d] disks" --force || echo "Already Wiped"
                 vifs --server $HOST --username $ESX_USER --password $ESX_PASSWD --rm  "[$d] tmp_images" --force || echo "Already Wiped"
                 vifs --server $HOST --username $ESX_USER --password $ESX_PASSWD --rm  "[$d] tmp_uploads" --force || echo "Already Wiped"
