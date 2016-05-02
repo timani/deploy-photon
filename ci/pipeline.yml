@@ -70,6 +70,7 @@ jobs:
         esx_hosts: {{esx_hosts}}
         wipe_arg: {{wipe_arg}}
         photon_manifest: {{photon_manifest}}
+
   - put: photon-run-id
     params: {file: photon-run-id/number}
 
@@ -129,6 +130,7 @@ jobs:
         path: deploy-photon/ci/tasks/deploy-photon.sh
       params:
         ova_ip: {{ova_ip}}
+        photon_manifest: {{photon_manifest}}
 
 - name: p2-task1-Deploy-BOSH
   serial: true

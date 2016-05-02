@@ -7,7 +7,7 @@ photon target set http://${ova_ip}:9000
 photon system destroy
 
 #Deploy Photon Controller
-photon system deploy deploy-photon/manifests/photon/photon.yml 2>&1
+photon system deploy $photon_manifest 2>&1
 echo "sleep 3 minutes while photon ctrlrs are starting"
 sleep 160
 
