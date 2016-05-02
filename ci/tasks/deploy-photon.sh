@@ -13,7 +13,7 @@ sleep 160
 
 #Target Photon Controller
 PHOTON_CTRL_ID=$(photon deployment list | head -3 | tail -1)
-PHOTON_CTRL_IP=$(photon deployment show $PHOTON_CTRL_ID | head -3 | tail -1 | grep -E "LoadBalancer.*28080" | awk -F " " '{print$2}')
+PHOTON_CTRL_IP=$(photon deployment show $PHOTON_CTRL_ID | grep -E "LoadBalancer.*28080" | awk -F " " '{print$2}')
 
 photon target set http://${PHOTON_CTRL_IP}:9000
 
