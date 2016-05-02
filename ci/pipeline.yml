@@ -6,6 +6,12 @@ resources:
     branch: master
     private_key: {{githubsshkey}}
 
+- name: bosh-photon-cpi-release
+  type: git
+  source:
+    uri: git@github.com:vmware/bosh-photon-cpi-release.git
+    branch: master
+
 - name: photon-run-id
   type: semver
   source:
@@ -118,5 +124,28 @@ jobs:
         - name: deploy-photon
       run:
         path: deploy-photon/ci/tasks/deploy-photon.sh
+      params:
+        ova_ip: {{ova_ip}}
+
+- name: p2-task1-Deploy-BOSH
+  serial: true
+  max_in_flight: 1
+  serial_groups: [full]
+  plan:
+  - get: photon-run-id
+    trigger: true
+    passed: [p1-task2-Deploy-Photon]
+  - get: deploy-photon
+    trigger: false
+  - get: bosh-photon-cpi-release
+    trigger: false
+  - task: p2-1-deploy-bosh
+    config:
+      platform: linux
+      image: docker:///virtmerlin/deploy-worker
+      inputs:
+        - name: deploy-photon
+      run:
+        path: deploy-photon/ci/tasks/deploy-bosh.sh
       params:
         ova_ip: {{ova_ip}}

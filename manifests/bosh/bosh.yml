@@ -6,7 +6,7 @@ releases:
   url: http://bosh.io/d/github.com/cloudfoundry/bosh?v=256.1
   sha1: bc1538d32cd030216ac39723d363b6dc70bdcc55
 - name: bosh-photon-cpi
-  url: https://github.com/vmware/bosh-photon-cpi-release/archive/PROMOTED-3.tar.gz
+  url: file:////bosh-photon-cpi-release/releases/bosh-photon-cpi/bosh-photon-cpi-0.8.0.u1.tgz
   sha1: defa4befa93a6666fc6901813961a40cd655247d
 
 resource_pools:
@@ -45,10 +45,12 @@ jobs:
 
   templates:
   - {name: nats, release: bosh}
+  - {name: redis, release: bosh}
   - {name: postgres, release: bosh}
   - {name: blobstore, release: bosh}
   - {name: director, release: bosh}
   - {name: health_monitor, release: bosh}
+  - {name: powerdns, release: bosh}
   - {name: cpi, release: bosh-photon-cpi}
 
   resource_pool: vms
@@ -70,6 +72,11 @@ jobs:
       password: postgres-password
       database: bosh
       adapter: postgres
+
+    redis:
+      password: redis-password
+      listen_addresss: 127.0.0.1
+      address: 127.0.0.1
 
     blobstore:
       address: 192.168.100.9
@@ -94,9 +101,14 @@ jobs:
       director_account: {user: admin, password: admin}
       resurrector_enabled: true
 
-    # photon job template
+    dns:
+      address: 127.0.0.1
+      db: *db
+
+    # photon job templatepwd
+
     photon: &photon
-      target: http://192.168.10.3:9000
+      target: http://192.168.100.3:9000
       user: dev
       password: pwd
       tenant: cf-test

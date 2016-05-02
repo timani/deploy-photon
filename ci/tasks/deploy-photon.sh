@@ -26,11 +26,11 @@ photon -n resource-ticket create --name dev-ticket --limits "vm.memory 3600 GB, 
 echo 'y' | photon project create --name dev-project --limits "vm.memory 3600 GB, vm 10000 COUNT" -r dev-ticket
 photon -n project set dev-project
 
-##Upload VM & Disk  Flavours
-photon flavor upload deploy-photon/manifests/photon/ephemeral-disk.yml
-photon flavor upload deploy-photon/manifests/photon/persistent-disk.yml
-photon flavor upload deploy-photon/manifests/photon/vm.yml
-photon flavor upload deploy-photon/manifests/photon/cf-ephemeral-disk.yml
+##Upload VM & Disk  Flavours - Newer go Client doesn't support upload MG
+#photon flavor upload deploy-photon/manifests/photon/ephemeral-disk.yml
+#photon flavor upload deploy-photon/manifests/photon/persistent-disk.yml
+#photon flavor upload deploy-photon/manifests/photon/vm.yml
+#photon flavor upload deploy-photon/manifests/photon/cf-ephemeral-disk.yml
 
 #Show Project ID
 photon project list
