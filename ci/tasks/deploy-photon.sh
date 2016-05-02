@@ -33,4 +33,4 @@ photon flavor upload deploy-photon/manifests/photon/vm.yml
 photon flavor upload deploy-photon/manifests/photon/cf-ephemeral-disk.yml
 
 #Show Project ID
-photon project show
+photon project list
