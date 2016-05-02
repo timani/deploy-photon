@@ -6,7 +6,7 @@ releases:
   url: http://bosh.io/d/github.com/cloudfoundry/bosh?v=256.1
   sha1: bc1538d32cd030216ac39723d363b6dc70bdcc55
 - name: bosh-photon-cpi
-  url: file:////bosh-photon-cpi-release/releases/bosh-photon-cpi/bosh-photon-cpi-0.8.0.u1.tgz
+  url: file://bosh-photon-cpi-release/releases/bosh-photon-cpi/bosh-photon-cpi-0.8.0.u1.tgz
   sha1: defa4befa93a6666fc6901813961a40cd655247d
 
 resource_pools:
@@ -14,7 +14,7 @@ resource_pools:
   network: default
   stemcell:
     url: https://bosh.io/d/stemcells/bosh-vsphere-esxi-ubuntu-trusty-go_agent?v=3232.1
-    sha1: c81a8638d715ba333c6271ec402937899432ca1b
+    sha1: 169df93e3e344cd84ac6ef16d76dd0276e321a25
   cloud_properties:
     vm_flavor: core-200
     disk_flavor: core-200
@@ -45,7 +45,6 @@ jobs:
 
   templates:
   - {name: nats, release: bosh}
-  - {name: redis, release: bosh}
   - {name: postgres, release: bosh}
   - {name: blobstore, release: bosh}
   - {name: director, release: bosh}
@@ -57,7 +56,7 @@ jobs:
   persistent_disk_pool: disks
 
   networks:
-  - {name: private, static_ips: [192.168.100.9]}
+  - {name: default, static_ips: [192.168.100.9]}
 
   properties:
     nats:
@@ -108,12 +107,12 @@ jobs:
     # photon job templatepwd
 
     photon: &photon
-      target: http://192.168.100.3:9000
+      target: http://PHOTON_CTRL_IP:9000
       user: dev
       password: pwd
+      ignore_cert: true
       tenant: cf-test
       project: PHOTON_PROJ
-      token: eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJwaC1hZG1pbkBlc3hjbG91ZCIsImF1ZCI6WyJwaC1hZG1pbkBlc3hjbG91ZCIsInJzX2VzeGNsb3VkIl0sInNjb3BlIjoib3BlbmlkIG9mZmxpbmVfYWNjZXNzIGF0X2dyb3VwcyByc19lc3hjbG91ZCIsImlzcyI6Imh0dHBzOlwvXC8xMC4xNDYuMTcuMjFcL29wZW5pZGNvbm5lY3RcL2VzeGNsb3VkIiwiZ3JvdXBzIjpbImVzeGNsb3VkXFxzZzEiLCJlc3hjbG91ZFxcRXZlcnlvbmUiXSwidG9rZW5fY2xhc3MiOiJhY2Nlc3NfdG9rZW4iLCJ0b2tlbl90eXBlIjoiQmVhcmVyIiwiZXhwIjoxNDQ1NDA5OTYxLCJpYXQiOjE0NDQ2ODk5NjEsInRlbmFudCI6ImVzeGNsb3VkIiwianRpIjoiNjg0cU5RYUxPNFdLckhlRnBGTjhld2JOYzBEeFZfMnFGUEU3aXJ4cGp2ZyJ9.Sc085J53yECsvRCXLrDTTmeIeDwog6AEaGb6euSudOeKZ3R9V7Tc6EpRoe311zCz-6NzklaW1rOl0dszmd4ArHYp1Bikkwx71i2HEZzpbhQDx7cl_94itHdDwTUfUUo184jbx6_lzxTQDof0ueVMyYOHZIYyN7uLbHRO3nSO4fT-NzpBEvRGhSF_eKryO_UJQJxfhIu-PkhN515j6T8OuzVkxTP-AzjY2_bA6KLGbSVZWu5QDkihBLbJUOcIRUUE04pi_abid1KORFlSqQskFJze7ncUijOm62_Vv9CBvqLwUcGXwYpklx2M6nIID-L7E9dskp4b08dZf9pcfWTt7srUv204jYvapwsXKpy8TjS5iwBxnPHOdmJwcZ0suc_y7e64w-OjiZxhXj4CxFSAwUghS54yhZ26DN8tDY0skuhYRrllY-0hrMWamMHLWeGHKOwqvNuQNQC9UlQCkY_ZAVofQeTf7qovUnOFX7q8iB-hT3DpC4qay6Fd1huq0M2afhoFzEgzG5rSSf9mi4TGGntQXf34zll4y5PdFFhh8abuA1nst2Y-rfInKUXeam5gg-4Xx7OkLf0zgrR5lwh405QVG8ZhDKDccC4_8PzvTmBX1Z-vwc6b09cRAMXm7kS7ybEQpBvAV51c7Q3BwE7ZlWPcC0wAP3KWFkxj4W92P9U
 
     agent: {mbus: "nats://nats:nats-password@192.168.100.9:4222"}
 
