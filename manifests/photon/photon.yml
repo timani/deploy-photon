@@ -22,7 +22,7 @@ hosts:
     MANAGEMENT_VM_IPS: 192.168.100.3-192.168.100.4
     MANAGEMENT_NETWORK_NETMASK: 255.255.255.0
     MANAGEMENT_PORTGROUP: pg-mglab-access-vlan-100-T
-- address_ranges: "192.168.10.104-192.168.10.106"
+- address_ranges: "192.168.10.105-192.168.10.105"
   username: root
   password: 1775TunTavernPA
   usage_tags:
