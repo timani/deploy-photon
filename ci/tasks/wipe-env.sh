@@ -28,7 +28,7 @@ IFS=',' read -r -a ESX_HOSTS <<< "$esx_hosts"
         done
 
 #Detect & Clean DataStore(s)
-        if [ ! -f /deploy-photon/manifests/photon/$photon_manifest ]; then
+        if [ ! -f deploy-photon/manifests/photon/$photon_manifest ]; then
             echo "Error: Photon Manifest not found!  I got this value for \$photon_manifest="$photon_manifest
             exit 1
         fi
@@ -37,7 +37,7 @@ IFS=',' read -r -a ESX_HOSTS <<< "$esx_hosts"
         declare -a DATASTORES
 
         # How Many Hosts subvalues exit in the Manifest
-        HOST_COUNT=$(cat /deploy-photon/manifests/photon/$photon_manifest | shyaml get-values hosts | grep address_ranges | wc -l)
+        HOST_COUNT=$(cat deploy-photon/manifests/photon/$photon_manifest | shyaml get-values hosts | grep address_ranges | wc -l)
 
         # Set the Query Strings to find all possible datastores in the Manifest
         for (( x=${HOST_COUNT}-1; x>=0; x--)); do
@@ -48,8 +48,8 @@ IFS=',' read -r -a ESX_HOSTS <<< "$esx_hosts"
 
         # Use shyaml to get all possible Datastores
         for (( y=${#VALS[@]}-1; y>=0; y--)); do
-                TEMPVAL=$(cat /deploy-photon/manifests/photon/$photon_manifest | shyaml get-values ${VALS[$y]} 2>/dev/null || \
-                        cat /deploy-photon/manifests/photon/$photon_manifest | shyaml get-value ${VALS[$y]} 2>/dev/null || echo "null")
+                TEMPVAL=$(cat deploy-photon/manifests/photon/$photon_manifest | shyaml get-values ${VALS[$y]} 2>/dev/null || \
+                        cat deploy-photon/manifests/photon/$photon_manifest | shyaml get-value ${VALS[$y]} 2>/dev/null || echo "null")
                 if [[ $TEMPVAL =~ ^.*\,.*$ ]]; then
                    IFS=',' read -r -a TEMPVALSPLIT <<< "$TEMPVAL"
                    for (( z=${#TEMPVALSPLIT[@]}-1; z>=0; z--)); do
