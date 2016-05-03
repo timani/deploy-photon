@@ -18,7 +18,7 @@ resources:
   type: semver
   source:
     bucket: concourse-photon
-    key: concourse-run-semver-mglab
+    key: {{semver_file_name}}
     initial_version: 1.0.0
     access_key_id: {{aws_id}}
     secret_access_key: {{aws_key}}
@@ -44,7 +44,7 @@ jobs:
         esx_user: {{esx_user}}
         esx_passwd: {{esx_passwd}}
         esx_hosts: {{esx_hosts}}
-        wipe_arg: {{wipe_arg}}
+        arg_wipe: {{arg_wipe}}
 
 - name: p0-WipeEnv-Full
   serial: true
@@ -68,7 +68,7 @@ jobs:
         esx_user: {{esx_user}}
         esx_passwd: {{esx_passwd}}
         esx_hosts: {{esx_hosts}}
-        wipe_arg: {{wipe_arg}}
+        arg_wipe: {{arg_wipe}}
         photon_manifest: {{photon_manifest}}
 
   - put: photon-run-id
@@ -96,7 +96,6 @@ jobs:
         esx_user: {{esx_user}}
         esx_passwd: {{esx_passwd}}
         esx_hosts: {{esx_hosts}}
-        wipe_arg: {{wipe_arg}}
         ova_network: {{ova_network}}
         ova_datastore: {{ova_datastore}}
         ova_ip: {{ova_ip}}
