@@ -2,7 +2,7 @@
 deployment:
   image_datastores: mglab-lun-01
   use_image_datastore_for_vms: true
-  syslog_endpoint: 192.168.10.4
+  syslog_endpoint: 192.168.10.3
   auth_enabled: false
   stats_enabled: false
   loadbalancer_enabled: true
