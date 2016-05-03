@@ -9,7 +9,7 @@ photon system destroy
 #Deploy Photon Controller
 photon system deploy deploy-photon/manifests/photon/$photon_manifest 2>&1
 echo "sleep 3 minutes while photon ctrlrs are starting"
-sleep 160
+sleep 180
 
 #Target Photon Controller
 PHOTON_CTRL_ID=$(photon deployment list | head -3 | tail -1)

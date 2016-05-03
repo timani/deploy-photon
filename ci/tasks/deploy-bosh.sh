@@ -14,7 +14,7 @@ photon tenant set cf-test
 photon project set dev-project
 PHOTON_PROJ=$(photon project list | head -3 | tail -1 | awk -F " " '{print$1}')
 
-#### Create Flavors for CF
+#### Create Photon Flavors for PCF
 # 000's - ultra small VMs
 # 1 cpu, 8MB memory
 photon -n flavor create -n core-10 -k vm -c "vm.cpu 1 COUNT,vm.memory 32 MB"
@@ -59,21 +59,25 @@ photon -n flavor create -n core-300 -k persistent-disk -c "persistent-disk 1 COU
 
 
 #### Wipe Any Previous Bosh init state
-rm -rf ~/.bosh_init || "Already Gone"
-rm -rf bosh-state.json  || "Already Gone"
+rm -rf ~/.bosh_init || "... bosh_init Already Gone"
+rm -rf bosh-state.json  || "... bosh-state.json Already Gone"
 
 #### Edit Bosh Manifest & Deploy BOSH
-cp deploy-photon/manifests/bosh/bosh.yml /tmp/bosh.yml
+if [ ! -f deploy-photon/manifests/bosh/$bosh_manifest ]; then
+    echo "Error: Bosh Manifest not found in deploy-photon/manifests/bosh/ !!!  I got this value for \$photon_manifest="$bosh_manifest
+    exit 1
+fi
+cp deploy-photon/manifests/bosh/$bosh_manifest /tmp/bosh.yml
 perl -pi -e "s/PHOTON_PROJ/$PHOTON_PROJ/g" /tmp/bosh.yml
 perl -pi -e "s/PHOTON_CTRL_IP/$PHOTON_CTRL_IP/g" /tmp/bosh.yml
 bosh-init deploy /tmp/bosh.yml
 
-#### Use the Same Stemcell in the manifest & Upload it for all CF/Service Deployments
-STEMCELL="3232.1"
-wget https://d26ekeud912fhb.cloudfront.net/bosh-stemcell/vsphere/bosh-stemcell-$STEMCELL-vsphere-esxi-ubuntu-trusty-go_agent.tgz -O /tmp/bosh-stemcell-$STEMCELL-vsphere-esxi-ubuntu-trusty-go_agent.tgz
-
-BOSH_TARGET=`cat deploy-photon/manifests/bosh/bosh.yml | grep -A6 "jobs:" | grep static_ips | awk -F ":" '{print$2}' | tr -d '[]' | tr -d ' '`
+# Target Bosh and test Status Reply
+echo "sleep 3 minutes while BOSH starts..."
+sleep 180
+BOSH_TARGET=$(cat /tmp/bosh.yml | shyaml get-values jobs.0.networks.0.static_ips)
+BOSH_LOGIN=$(cat /tmp/bosh.yml | shyaml get-value jobs.0.properties.director.user_management.local.users.0.name)
+BOSH_PASSWD=$(cat /tmp/bosh.yml | shyaml get-value jobs.0.properties.director.user_management.local.users.0.password)
 bosh -n target https://${BOSH_TARGET}
-bosh -n login admin admin
-
-bosh upload stemcell /tmp/bosh-stemcell-$STEMCELL-vsphere-esxi-ubuntu-trusty-go_agent.tgz
+bosh -n login ${BOSH_LOGIN} ${BOSH_PASSWD}
+bosh status
