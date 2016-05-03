@@ -45,6 +45,7 @@ jobs:
         esx_passwd: {{esx_passwd}}
         esx_hosts: {{esx_hosts}}
         arg_wipe: {{arg_wipe}}
+        photon_manifest: {{photon_manifest}}
 
 - name: p0-WipeEnv-Full
   serial: true
