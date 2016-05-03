@@ -27,8 +27,45 @@ IFS=',' read -r -a ESX_HOSTS <<< "$esx_hosts"
                 HOST=$x
         done
 
-#Clean DataStore(s)
-        for d in $(cat $deployment_manifest | grep DATASTORE | awk -F ":" '{print $2}' |  tr "," "\n" | sort -u); do
+#Detect & Clean DataStore(s)
+        if [ ! -f /deploy-photon/manifests/photon/$photon_manifest ]; then
+            echo "Error: Photon Manifest not found!  I got this value for \$photon_manifest="$photon_manifest
+            exit 1
+        fi
+
+        declare -a VALS
+        declare -a DATASTORES
+
+        # How Many Hosts subvalues exit in the Manifest
+        HOST_COUNT=$(cat /deploy-photon/manifests/photon/$photon_manifest | shyaml get-values hosts | grep address_ranges | wc -l)
+
+        # Set the Query Strings to find all possible datastores in the Manifest
+        for (( x=${HOST_COUNT}-1; x>=0; x--)); do
+            VALS+=(hosts.$x.metadata.ALLOWED_DATASTORES)
+            VALS+=(hosts.$x.metadata.MANAGEMENT_DATASTORE)
+        done
+        VALS+=(deployment.image_datastores)
+
+        # Use shyaml to get all possible Datastores
+        for (( y=${#VALS[@]}-1; y>=0; y--)); do
+                TEMPVAL=$(cat /deploy-photon/manifests/photon/$photon_manifest | shyaml get-values ${VALS[$y]} 2>/dev/null || \
+                        cat /deploy-photon/manifests/photon/$photon_manifest | shyaml get-value ${VALS[$y]} 2>/dev/null || echo "null")
+                if [[ $TEMPVAL =~ ^.*\,.*$ ]]; then
+                   IFS=',' read -r -a TEMPVALSPLIT <<< "$TEMPVAL"
+                   for (( z=${#TEMPVALSPLIT[@]}-1; z>=0; z--)); do
+                        DATASTORES+=(${TEMPVALSPLIT[$z]})
+                   done
+                else
+                   DATASTORES+=(${TEMPVAL})
+                fi
+
+        done
+
+        # Sort to Unique Values
+        DATASTORES=($(printf "%s\n" "${DATASTORES[@]}" | sort -u | grep -v null))
+
+        # Clean Datastores
+        for d in ${DATASTORES[@]}; do
                 vifs --server $HOST --username $ESX_USER --password $ESX_PASSWD --rm  "[$d] disks" --force || echo "Already Wiped"
                 vifs --server $HOST --username $ESX_USER --password $ESX_PASSWD --rm  "[$d] tmp_images" --force || echo "Already Wiped"
                 vifs --server $HOST --username $ESX_USER --password $ESX_PASSWD --rm  "[$d] tmp_uploads" --force || echo "Already Wiped"
