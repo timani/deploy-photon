@@ -16,6 +16,7 @@ RUN apt-get install -yq build-essential \
   wget \
   gcc \
   gcc-multilib \
+  git \
   uuid \
   uuid-dev \
   perl \
@@ -24,8 +25,15 @@ RUN apt-get install -yq build-essential \
   liburi-perl \
   libxml-libxml-perl \
   libcrypt-ssleay-perl \
+  python-pip \
+  python-dev \
   zlib1g-dev && \
 apt-get clean
+
+# Upgrade PIP & Install shyaml
+RUN pip install --upgrade pip
+RUN pip install --upgrade virtualenv
+RUN pip install shyaml
 
 # Install latest BOSH cli & UAAC cli
 RUN gem install bosh_cli --no-ri --no-rdoc

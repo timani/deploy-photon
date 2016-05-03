@@ -3,7 +3,7 @@ resources:
   type: git
   source:
     uri: git@github.com:virtmerlin/deploy-photon.git
-    branch: master
+    branch: 118841681
     private_key: {{githubsshkey}}
 
 - name: bosh-photon-cpi-release
