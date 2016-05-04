@@ -6,8 +6,8 @@ releases:
   url: http://bosh.io/d/github.com/cloudfoundry/bosh?v=256.1
   sha1: bc1538d32cd030216ac39723d363b6dc70bdcc55
 - name: bosh-photon-cpi
-  url: file:///CPI_RELEASE ## Will Be updated by deploy-bosh.sh
-  sha1: CPI_SHA1 ## Will Be updated by deploy-bosh.sh
+  url: file:///CPI_RELEASE
+  sha1: CPI_SHA1
 
 resource_pools:
 - name: vms
@@ -38,7 +38,7 @@ networks:
     gateway: BOSH_DEPLOYMENT_NETWORK_GW
     dns: [BOSH_DEPLOYMENT_NETWORK_DNS]
     cloud_properties:
-      network_id: BOSH_DEPLOYMENT_NETWORK_ID  ## Will Be updated by deploy-bosh.sh
+      network_id: BOSH_DEPLOYMENT_NETWORK_ID
 
 jobs:
 - name: bosh
@@ -57,7 +57,7 @@ jobs:
   persistent_disk_pool: disks
 
   networks:
-  - {name: default, static_ips: [BOSH_DEPLOYMENT_NETWORK_IP]} ## Will Be updated by deploy-bosh.sh
+  - {name: default, static_ips: [BOSH_DEPLOYMENT_NETWORK_IP]}
 
   properties:
     nats:
@@ -79,7 +79,7 @@ jobs:
       address: 127.0.0.1
 
     blobstore:
-      address: BOSH_DEPLOYMENT_NETWORK_IP ## Will Be updated by deploy-bosh.sh
+      address: BOSH_DEPLOYMENT_NETWORK_IP
       port: 25250
       provider: dav
       director: {user: director, password: director-password}
@@ -105,23 +105,21 @@ jobs:
       address: 127.0.0.1
       db: *db
 
-    # photon job templatepwd
-
     photon: &photon
-      target: http://PHOTON_CTRL_IP:9000 ## Will Be updated by deploy-bosh.sh
-      user: PHOTON_USER ## Will Be updated by deploy-bosh.sh
-      password: PHOTON_PASSWD ## Will Be updated by deploy-bosh.sh
-      ignore_cert: PHOTON_IGNORE_CERT ## Will Be updated by deploy-bosh.sh
-      tenant: PHOTON_TENANT ## Will Be updated by deploy-bosh.sh
-      project: PHOTON_PROJ_ID ## Will Be updated by deploy-bosh.sh
+      target: http://PHOTON_CTRL_IP:9000
+      user: PHOTON_USER
+      password: PHOTON_PASSWD
+      ignore_cert: PHOTON_IGNORE_CERT
+      tenant: PHOTON_TENANT
+      project: PHOTON_PROJ_ID
 
-    agent: {mbus: "nats://nats:nats-password@BOSH_DEPLOYMENT_NETWORK_IP:4222"}  ## Will Be updated by deploy-bosh.sh
+    agent: {mbus: "nats://nats:nats-password@BOSH_DEPLOYMENT_NETWORK_IP:4222"}
 
     ntp: &ntp [0.pool.ntp.org, 1.pool.ntp.org]
 
 cloud_provider:
   template: {name: cpi, release: bosh-photon-cpi}
-  mbus: "https://mbus:mbus-password@BOSH_DEPLOYMENT_NETWORK_IP:6868"  ## Will Be updated by deploy-bosh.sh
+  mbus: "https://mbus:mbus-password@BOSH_DEPLOYMENT_NETWORK_IP:6868"
 
   properties:
     agent: {mbus: "https://mbus:mbus-password@0.0.0.0:6868"}

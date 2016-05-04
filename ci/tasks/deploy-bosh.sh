@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 set -e
 
 #### Build the Photon CPI and get sha1
@@ -69,7 +69,7 @@ photon -n flavor create -n core-300 -k persistent-disk -c "persistent-disk 1 COU
 
 
 #### Create Photon Network
-photon network create -n $bosh_deployment_network -p $bosh_deployment_network -d "BOSH Deployment Network" || echo "$bosh_deployment_network Already Exists"
+photon network create -n $bosh_deployment_network -p $bosh_deployment_network -d "BOSH Deployment Network" || echo "Photon Network $bosh_deployment_network Already Exists ..."
 BOSH_DEPLOYMENT_NETWORK_ID=$(photon network list | grep $bosh_deployment_network | awk -F " " '{print$1}')
 
 #### Edit Bosh Manifest & Deploy BOSH
@@ -87,6 +87,10 @@ BOSH_DEPLOYMENT_NETWORK_SUBNET_REGEX=$(echo $bosh_deployment_network_subnet | se
 
 perl -pi -e "s/PHOTON_PROJ_ID/$PHOTON_PROJ_ID/g" /tmp/bosh.yml
 perl -pi -e "s/PHOTON_CTRL_IP/$PHOTON_CTRL_IP/g" /tmp/bosh.yml
+perl -pi -e "s/PHOTON_USER/$photon_user/g" /tmp/bosh.yml
+perl -pi -e "s/PHOTON_PASSWD/$photon_passwd/g" /tmp/bosh.yml
+perl -pi -e "s/PHOTON_IGNORE_CERT/$photon_ignore_cert/g" /tmp/bosh.yml
+perl -pi -e "s/PHOTON_TENANT/$photon_tenant/g" /tmp/bosh.yml
 perl -pi -e "s/CPI_SHA1/$CPI_SHA1/g" /tmp/bosh.yml
 perl -pi -e "s/CPI_RELEASE/$CPI_RELEASE_REGEX/g" /tmp/bosh.yml
 perl -pi -e "s/BOSH_DEPLOYMENT_NETWORK_ID/$BOSH_DEPLOYMENT_NETWORK_ID/g" /tmp/bosh.yml
