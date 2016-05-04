@@ -20,5 +20,5 @@ ovftool --acceptAllEulas --noSSLVerify --skipManifestCheck \
 --prop:syslog_endpoint=${ova_syslog} \
 --prop:admin_password=${ova_passwd} /tmp/installer-vm.ova \
 vi://${ova_esx_user}:${ova_esx_passwd}@${ova_esx_host}
-echo "sleeping 3 minutes while CLI ova Powers On"
+echo "sleeping 3 minutes while Photon-Installer ova Powers On"
 sleep 180
