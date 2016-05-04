@@ -131,6 +131,8 @@ jobs:
       params:
         ova_ip: {{ova_ip}}
         photon_manifest: {{photon_manifest}}
+        photon_tenant: {{photon_tenant}}
+        photon_project: {{photon_project}}
 
 - name: p2-task1-Deploy-BOSH
   serial: true
@@ -155,5 +157,15 @@ jobs:
         path: deploy-photon/ci/tasks/deploy-bosh.sh
       params:
         ova_ip: {{ova_ip}}
-        bosh_manifest: {{bosh_manifest}}
         photon_release: {{photon_release}}
+        bosh_manifest: {{bosh_manifest}}
+        bosh_deployment_network: {{bosh_deployment_network}}
+        bosh_deployment_network_subnet: {{bosh_deployment_network_subnet}}
+        bosh_deployment_network_gw: {{bosh_deployment_network_gw}}
+        bosh_deployment_network_dns: {{bosh_deployment_network_dns}}
+        bosh_deployment_network_ip: {{bosh_deployment_network_ip}}
+        photon_user: {{photon_user}}
+        photon_passwd: {{photon_passwd}}
+        photon_ignore_cert: {{photon_ignore_cert}}
+        photon_tenant: {{photon_tenant}}
+        photon_project: {{photon_project}}

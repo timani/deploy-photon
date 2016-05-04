@@ -18,19 +18,14 @@ PHOTON_CTRL_IP=$(photon deployment show $PHOTON_CTRL_ID | grep -E "LoadBalancer.
 photon target set http://${PHOTON_CTRL_IP}:9000
 
 ##Create Tenant
-photon -n tenant create cf-test
-photon -n tenant set cf-test
+photon -n tenant create $photon_tenant
+photon -n tenant set $photon_tenant
 
 ##Create Project & Link Resources
-photon -n resource-ticket create --name dev-ticket --limits "vm.memory 3600 GB, vm 10000 COUNT" -t cf-test
-echo 'y' | photon project create --name dev-project --limits "vm.memory 3600 GB, vm 10000 COUNT" -r dev-ticket
-photon -n project set dev-project
+photon -n resource-ticket create --name $photon_project-ticket --limits "vm.memory 3600 GB, vm 10000 COUNT" -t $photon_tenant
+echo 'y' | photon project create --name $photon_project --limits "vm.memory 3600 GB, vm 10000 COUNT" -r $photon_project-ticket
+photon -n project set $photon_project
 
-##Upload VM & Disk  Flavours - Newer go Client doesn't support upload MG
-#photon flavor upload deploy-photon/manifests/photon/ephemeral-disk.yml
-#photon flavor upload deploy-photon/manifests/photon/persistent-disk.yml
-#photon flavor upload deploy-photon/manifests/photon/vm.yml
-#photon flavor upload deploy-photon/manifests/photon/cf-ephemeral-disk.yml
 
 #Show Project ID
 photon project list

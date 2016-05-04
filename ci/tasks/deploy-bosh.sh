@@ -9,7 +9,6 @@ else
 fi
 cd bosh-photon-cpi-release
 CPI_RELEASE=$(bosh create release ../$CPI_FILE | grep Generated | awk -F " " '{print$2}')
-CPI_RELEASE_REGEX=$(echo $CPI_RELEASE | sed 's|/|\\\/|g')
 cd ..
 CPI_SHA1=$(openssl sha1 $CPI_RELEASE | awk -F "= " '{print$2}')
 
@@ -61,14 +60,17 @@ photon -n flavor create -n pcf-32 -k ephemeral-disk -c "ephemeral-disk 1 COUNT,e
 photon -n flavor create -n pcf-64 -k ephemeral-disk -c "ephemeral-disk 1 COUNT,ephemeral-disk.capacity 64 GB"
 photon -n flavor create -n pcf-128 -k ephemeral-disk -c "ephemeral-disk 1 COUNT,ephemeral-disk.capacity 128 GB"
 photon -n flavor create -n pcf-256 -k ephemeral-disk -c "ephemeral-disk 1 COUNT,ephemeral-disk.capacity 256 GB"
+photon -n flavor create -n core-100 -k ephemeral-disk -c "ephemeral-disk 1 COUNT"
+photon -n flavor create -n core-200 -k ephemeral-disk -c "ephemeral-disk 1 COUNT"
+photon -n flavor create -n core-300 -k ephemeral-disk -c "ephemeral-disk 1 COUNT"
 photon -n flavor create -n core-100 -k persistent-disk -c "persistent-disk 1 COUNT"
 photon -n flavor create -n core-200 -k persistent-disk -c "persistent-disk 1 COUNT"
 photon -n flavor create -n core-300 -k persistent-disk -c "persistent-disk 1 COUNT"
 
 
-#### Wipe Any Previous Bosh init state
-#rm -rf ~/.bosh_init || "... bosh_init Already Gone"
-#rm -rf bosh-state.json  || "... bosh-state.json Already Gone"
+#### Create Photon Network
+photon network create -n $bosh_deployment_network -p $bosh_deployment_network -d "BOSH Deployment Network" || echo "$bosh_deployment_network Already Exists"
+BOSH_DEPLOYMENT_NETWORK_ID=$(photon network list | grep $bosh_deployment_network | awk -F " " '{print$1}')
 
 #### Edit Bosh Manifest & Deploy BOSH
 
@@ -77,11 +79,24 @@ if [ ! -f deploy-photon/manifests/bosh/$bosh_manifest ]; then
     exit 1
 fi
 
+# Set Photon Specific Deployment Object IDs in BOSH Manifest
 cp deploy-photon/manifests/bosh/$bosh_manifest /tmp/bosh.yml
+
+CPI_RELEASE_REGEX=$(echo $CPI_RELEASE | sed 's|/|\\\/|g')
+BOSH_DEPLOYMENT_NETWORK_SUBNET_REGEX=$(echo $bosh_deployment_network_subnet | sed 's|/|\\\/|g' | sed 's|.|\\\.|g')
+
+
 perl -pi -e "s/PHOTON_PROJ/$PHOTON_PROJ/g" /tmp/bosh.yml
 perl -pi -e "s/PHOTON_CTRL_IP/$PHOTON_CTRL_IP/g" /tmp/bosh.yml
 perl -pi -e "s/CPI_SHA1/$CPI_SHA1/g" /tmp/bosh.yml
 perl -pi -e "s/CPI_RELEASE/$CPI_RELEASE_REGEX/g" /tmp/bosh.yml
+perl -pi -e "s/BOSH_DEPLOYMENT_NETWORK_ID/$BOSH_DEPLOYMENT_NETWORK_ID/g" /tmp/bosh.yml
+perl -pi -e "s/BOSH_DEPLOYMENT_NETWORK_SUBNET/$BOSH_DEPLOYMENT_NETWORK_SUBNET_REGEX/g" /tmp/bosh.yml
+perl -pi -e "s/BOSH_DEPLOYMENT_NETWORK_GW/$BOSH_DEPLOYMENT_NETWORK_GW/g" /tmp/bosh.yml
+perl -pi -e "s/BOSH_DEPLOYMENT_NETWORK_DNS/$BOSH_DEPLOYMENT_NETWORK_DNS/g" /tmp/bosh.yml
+perl -pi -e "s/BOSH_DEPLOYMENT_NETWORK_IP/$BOSH_DEPLOYMENT_NETWORK_IP/g" /tmp/bosh.yml
+
+# Deploy BOSH
 bosh-init deploy /tmp/bosh.yml
 
 # Target Bosh and test Status Reply
