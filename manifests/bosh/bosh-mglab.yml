@@ -17,7 +17,7 @@ resource_pools:
     sha1: 169df93e3e344cd84ac6ef16d76dd0276e321a25
   cloud_properties:
     vm_flavor: core-200
-    disk_flavor: core-20
+    disk_flavor: pcf-20
   env:
     bosh:
       # c1oudc0w is a default password for vcap user
@@ -28,7 +28,7 @@ disk_pools:
 - name: disks
   disk_size: 20_000
   cloud_properties:
-    disk_flavor: core-20
+    disk_flavor: pcf-20
 
 networks:
 - name: default
