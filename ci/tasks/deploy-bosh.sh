@@ -9,6 +9,7 @@ else
 fi
 cd bosh-photon-cpi-release
 CPI_RELEASE=$(bosh create release ../$CPI_FILE | grep Generated | awk -F " " '{print$2}')
+CPI_RELEASE_REGEX=$(echo $CPI_RELEASE | sed 's|/|\\\/|g')
 cd ..
 CPI_SHA1=$(openssl sha1 $CPI_RELEASE | awk -F "= " '{print$2}')
 
@@ -80,7 +81,7 @@ cp deploy-photon/manifests/bosh/$bosh_manifest /tmp/bosh.yml
 perl -pi -e "s/PHOTON_PROJ/$PHOTON_PROJ/g" /tmp/bosh.yml
 perl -pi -e "s/PHOTON_CTRL_IP/$PHOTON_CTRL_IP/g" /tmp/bosh.yml
 perl -pi -e "s/CPI_SHA1/$CPI_SHA1/g" /tmp/bosh.yml
-perl -pi -e "s/CPI_RELEASE/$CPI_RELEASE/g" /tmp/bosh.yml
+perl -pi -e "s/CPI_RELEASE/$CPI_RELEASE_REGEX/g" /tmp/bosh.yml
 bosh-init deploy /tmp/bosh.yml
 
 # Target Bosh and test Status Reply
