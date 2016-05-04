@@ -2,6 +2,7 @@
 set -e
 
 #### Build the Photon CPI and get sha1
+echo "Building Photon CPI ..."
 if [[ $photon_release == "latest" || -z $photon_release ]]; then
         CPI_FILE=$(ls bosh-photon-cpi-release/releases/bosh-photon-cpi/bosh-photon-cpi-*.yml | sort | head -1)
 else
@@ -13,13 +14,14 @@ cd ..
 CPI_SHA1=$(openssl sha1 $CPI_RELEASE | awk -F "= " '{print$2}')
 
 #### Get Photon Project Target
+echo "Creating Photon Constructs for BOSH Deployment ..."
 photon target set http://${ova_ip}:9000
 PHOTON_CTRL_ID=$(photon deployment list | head -3 | tail -1)
 PHOTON_CTRL_IP=$(photon deployment show $PHOTON_CTRL_ID | grep -E "LoadBalancer.*28080" | awk -F " " '{print$2}')
 photon target set http://${PHOTON_CTRL_IP}:9000
 photon tenant set $photon_tenant
 photon project set $photon_project
-PHOTON_PROJ_ID=$(photon project list | $photon_project |  awk -F " " '{print$1}')
+PHOTON_PROJ_ID=$(photon project list | grep $photon_project |  awk -F " " '{print$1}')
 
 #### Create Photon Flavors for PCF
 # 000's - ultra small VMs
@@ -73,7 +75,7 @@ photon network create -n $bosh_deployment_network -p $bosh_deployment_network -d
 BOSH_DEPLOYMENT_NETWORK_ID=$(photon network list | grep $bosh_deployment_network | awk -F " " '{print$1}')
 
 #### Edit Bosh Manifest & Deploy BOSH
-
+echo "Updating BOSH Manifest template deploy-photon/manifests/bosh/$bosh_manifest ..."
 if [ ! -f deploy-photon/manifests/bosh/$bosh_manifest ]; then
     echo "Error: Bosh Manifest not found in deploy-photon/manifests/bosh/ !!!  I got this value for \$bosh_manifest="$bosh_manifest
     exit 1
@@ -100,6 +102,7 @@ perl -pi -e "s/BOSH_DEPLOYMENT_NETWORK_DNS/$bosh_deployment_network_dns/g" /tmp/
 perl -pi -e "s/BOSH_DEPLOYMENT_NETWORK_IP/$bosh_deployment_network_ip/g" /tmp/bosh.yml
 
 # Deploy BOSH
+echo "Deploying BOSH ..."
 bosh-init deploy /tmp/bosh.yml
 
 # Target Bosh and test Status Reply
