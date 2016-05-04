@@ -1,9 +1,16 @@
 #!/bin/bash -x
+set -e
 
-#### Build the latest Photon CPI
+#### Build the Photon CPI and get sha1
+if [[ $photon_release == "latest" || -z $photon_release ]]; then
+        CPI_FILE=$(ls bosh-photon-cpi-release/releases/bosh-photon-cpi/bosh-photon-cpi-*.yml | sort | head -1)
+else
+        CPI_FILE=$(ls bosh-photon-cpi-release/releases/bosh-photon-cpi/bosh-photon-cpi-$photon_release.yml | sort | head -1)
+fi
 cd bosh-photon-cpi-release
-bosh create release releases/bosh-photon-cpi/bosh-photon-cpi-0.8.0.u1.yml
+bosh create release ../$CPI_FILE
 cd ..
+CPI_SHA1=$(openssl sha1 $CPI_FILE | awk -F "= " '{print$2}')
 
 #### Get Photon Project Target
 photon target set http://${ova_ip}:9000
@@ -59,17 +66,20 @@ photon -n flavor create -n core-300 -k persistent-disk -c "persistent-disk 1 COU
 
 
 #### Wipe Any Previous Bosh init state
-rm -rf ~/.bosh_init || "... bosh_init Already Gone"
-rm -rf bosh-state.json  || "... bosh-state.json Already Gone"
+#rm -rf ~/.bosh_init || "... bosh_init Already Gone"
+#rm -rf bosh-state.json  || "... bosh-state.json Already Gone"
 
 #### Edit Bosh Manifest & Deploy BOSH
+
 if [ ! -f deploy-photon/manifests/bosh/$bosh_manifest ]; then
-    echo "Error: Bosh Manifest not found in deploy-photon/manifests/bosh/ !!!  I got this value for \$photon_manifest="$bosh_manifest
+    echo "Error: Bosh Manifest not found in deploy-photon/manifests/bosh/ !!!  I got this value for \$bosh_manifest="$bosh_manifest
     exit 1
 fi
+
 cp deploy-photon/manifests/bosh/$bosh_manifest /tmp/bosh.yml
 perl -pi -e "s/PHOTON_PROJ/$PHOTON_PROJ/g" /tmp/bosh.yml
 perl -pi -e "s/PHOTON_CTRL_IP/$PHOTON_CTRL_IP/g" /tmp/bosh.yml
+perl -pi -e "s/CPI_SHA1/$CPI_SHA1/g" /tmp/bosh.yml
 bosh-init deploy /tmp/bosh.yml
 
 # Target Bosh and test Status Reply

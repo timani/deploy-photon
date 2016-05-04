@@ -150,8 +150,10 @@ jobs:
       image: docker:///virtmerlin/deploy-worker
       inputs:
         - name: deploy-photon
+        - name: bosh-photon-cpi-release
       run:
         path: deploy-photon/ci/tasks/deploy-bosh.sh
       params:
         ova_ip: {{ova_ip}}
         bosh_manifest: {{bosh_manifest}}
+        photon_release: {{photon_release}}

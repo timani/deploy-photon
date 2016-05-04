@@ -6,8 +6,8 @@ releases:
   url: http://bosh.io/d/github.com/cloudfoundry/bosh?v=256.1
   sha1: bc1538d32cd030216ac39723d363b6dc70bdcc55
 - name: bosh-photon-cpi
-  url: file://bosh-photon-cpi-release/releases/bosh-photon-cpi/bosh-photon-cpi-0.8.0.u1.tgz
-  sha1: defa4befa93a6666fc6901813961a40cd655247d
+  file: http://bosh-photon-cpi-release/releases/bosh-photon-cpi/bosh-photon-cpi-0.8.0.u1.tgz
+  sha1: CPI_SHA1
 
 resource_pools:
 - name: vms
