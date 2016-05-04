@@ -83,8 +83,7 @@ fi
 cp deploy-photon/manifests/bosh/$bosh_manifest /tmp/bosh.yml
 
 CPI_RELEASE_REGEX=$(echo $CPI_RELEASE | sed 's|/|\\\/|g')
-BOSH_DEPLOYMENT_NETWORK_SUBNET_REGEX=$(echo $bosh_deployment_network_subnet | sed 's|/|\\\/|g' | sed 's|.|\\\.|g')
-
+BOSH_DEPLOYMENT_NETWORK_SUBNET_REGEX=$(echo $bosh_deployment_network_subnet | sed 's|/|\\\/|g' | sed 's|\.|\\\.|g')
 
 perl -pi -e "s/PHOTON_PROJ_ID/$PHOTON_PROJ_ID/g" /tmp/bosh.yml
 perl -pi -e "s/PHOTON_CTRL_IP/$PHOTON_CTRL_IP/g" /tmp/bosh.yml
@@ -92,9 +91,9 @@ perl -pi -e "s/CPI_SHA1/$CPI_SHA1/g" /tmp/bosh.yml
 perl -pi -e "s/CPI_RELEASE/$CPI_RELEASE_REGEX/g" /tmp/bosh.yml
 perl -pi -e "s/BOSH_DEPLOYMENT_NETWORK_ID/$BOSH_DEPLOYMENT_NETWORK_ID/g" /tmp/bosh.yml
 perl -pi -e "s/BOSH_DEPLOYMENT_NETWORK_SUBNET/$BOSH_DEPLOYMENT_NETWORK_SUBNET_REGEX/g" /tmp/bosh.yml
-perl -pi -e "s/BOSH_DEPLOYMENT_NETWORK_GW/$BOSH_DEPLOYMENT_NETWORK_GW/g" /tmp/bosh.yml
-perl -pi -e "s/BOSH_DEPLOYMENT_NETWORK_DNS/$BOSH_DEPLOYMENT_NETWORK_DNS/g" /tmp/bosh.yml
-perl -pi -e "s/BOSH_DEPLOYMENT_NETWORK_IP/$BOSH_DEPLOYMENT_NETWORK_IP/g" /tmp/bosh.yml
+perl -pi -e "s/BOSH_DEPLOYMENT_NETWORK_GW/$bosh_deployment_network_gw/g" /tmp/bosh.yml
+perl -pi -e "s/BOSH_DEPLOYMENT_NETWORK_DNS/$bosh_deployment_network_dns/g" /tmp/bosh.yml
+perl -pi -e "s/BOSH_DEPLOYMENT_NETWORK_IP/$bosh_deployment_network_ip/g" /tmp/bosh.yml
 
 # Deploy BOSH
 bosh-init deploy /tmp/bosh.yml
