@@ -169,3 +169,28 @@ jobs:
         photon_ignore_cert: {{photon_ignore_cert}}
         photon_tenant: {{photon_tenant}}
         photon_project: {{photon_project}}
+
+- name: p2-task2-Deploy-PCF
+  serial: true
+  max_in_flight: 1
+  serial_groups: [full]
+  plan:
+  - get: photon-run-id
+    trigger: false
+    passed: [p2-task1-Deploy-BOSH]
+  - get: deploy-photon
+    trigger: false
+  - task: p2-2-deploy-ERT
+    config:
+      platform: linux
+      image: docker:///virtmerlin/deploy-worker
+      inputs:
+        - name: deploy-photon
+      run:
+        path: deploy-photon/ci/tasks/deploy-pcf.sh
+        args: [ert,{{pcf_ert_version}}]
+      params:
+        ova_ip: {{ova_ip}}
+        bosh_manifest: {{bosh_manifest}}
+        bosh_deployment_network_ip: {{bosh_deployment_network_ip}}
+        pcf_ert_version: {{pcf_ert_version}}
