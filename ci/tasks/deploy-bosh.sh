@@ -17,9 +17,9 @@ photon target set http://${ova_ip}:9000
 PHOTON_CTRL_ID=$(photon deployment list | head -3 | tail -1)
 PHOTON_CTRL_IP=$(photon deployment show $PHOTON_CTRL_ID | grep -E "LoadBalancer.*28080" | awk -F " " '{print$2}')
 photon target set http://${PHOTON_CTRL_IP}:9000
-photon tenant set cf-test
-photon project set dev-project
-PHOTON_PROJ=$(photon project list | head -3 | tail -1 | awk -F " " '{print$1}')
+photon tenant set $photon_tenant
+photon project set $photon_project
+PHOTON_PROJ_ID=$(photon project list | $photon_project |  awk -F " " '{print$1}')
 
 #### Create Photon Flavors for PCF
 # 000's - ultra small VMs
@@ -86,7 +86,7 @@ CPI_RELEASE_REGEX=$(echo $CPI_RELEASE | sed 's|/|\\\/|g')
 BOSH_DEPLOYMENT_NETWORK_SUBNET_REGEX=$(echo $bosh_deployment_network_subnet | sed 's|/|\\\/|g' | sed 's|.|\\\.|g')
 
 
-perl -pi -e "s/PHOTON_PROJ/$PHOTON_PROJ/g" /tmp/bosh.yml
+perl -pi -e "s/PHOTON_PROJ_ID/$PHOTON_PROJ_ID/g" /tmp/bosh.yml
 perl -pi -e "s/PHOTON_CTRL_IP/$PHOTON_CTRL_IP/g" /tmp/bosh.yml
 perl -pi -e "s/CPI_SHA1/$CPI_SHA1/g" /tmp/bosh.yml
 perl -pi -e "s/CPI_RELEASE/$CPI_RELEASE_REGEX/g" /tmp/bosh.yml

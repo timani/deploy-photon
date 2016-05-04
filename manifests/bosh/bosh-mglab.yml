@@ -113,7 +113,7 @@ jobs:
       password: PHOTON_PASSWD ## Will Be updated by deploy-bosh.sh
       ignore_cert: PHOTON_IGNORE_CERT ## Will Be updated by deploy-bosh.sh
       tenant: PHOTON_TENANT ## Will Be updated by deploy-bosh.sh
-      project: PHOTON_PROJ ## Will Be updated by deploy-bosh.sh
+      project: PHOTON_PROJ_ID ## Will Be updated by deploy-bosh.sh
 
     agent: {mbus: "nats://nats:nats-password@BOSH_DEPLOYMENT_NETWORK_IP:4222"}  ## Will Be updated by deploy-bosh.sh
 
