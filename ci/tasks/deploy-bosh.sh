@@ -8,9 +8,9 @@ else
         CPI_FILE=$(ls bosh-photon-cpi-release/releases/bosh-photon-cpi/bosh-photon-cpi-$photon_release.yml | sort | head -1)
 fi
 cd bosh-photon-cpi-release
-bosh create release ../$CPI_FILE
+CPI_RELEASE=$(bosh create release ../$CPI_FILE | grep Generated | awk -F " " '{print$2}')
 cd ..
-CPI_SHA1=$(openssl sha1 $CPI_FILE | awk -F "= " '{print$2}')
+CPI_SHA1=$(openssl sha1 $CPI_RELEASE | awk -F "= " '{print$2}')
 
 #### Get Photon Project Target
 photon target set http://${ova_ip}:9000
@@ -80,6 +80,7 @@ cp deploy-photon/manifests/bosh/$bosh_manifest /tmp/bosh.yml
 perl -pi -e "s/PHOTON_PROJ/$PHOTON_PROJ/g" /tmp/bosh.yml
 perl -pi -e "s/PHOTON_CTRL_IP/$PHOTON_CTRL_IP/g" /tmp/bosh.yml
 perl -pi -e "s/CPI_SHA1/$CPI_SHA1/g" /tmp/bosh.yml
+perl -pi -e "s/CPI_RELEASE/$CPI_RELEASE/g" /tmp/bosh.yml
 bosh-init deploy /tmp/bosh.yml
 
 # Target Bosh and test Status Reply
