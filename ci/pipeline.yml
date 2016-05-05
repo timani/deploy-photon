@@ -195,5 +195,7 @@ jobs:
         ova_ip: {{ova_ip}}
         bosh_manifest: {{bosh_manifest}}
         bosh_deployment_network_ip: {{bosh_deployment_network_ip}}
+        bosh_deployment_user: {{bosh_deployment_user}}
+        bosh_deployment_passwd: {{bosh_deployment_passwd}}
         pcf_ert_version: {{pcf_ert_version}}
         pcf_pivnet_token: {{pcf_pivnet_token}}
