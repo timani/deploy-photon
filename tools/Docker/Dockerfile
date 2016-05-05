@@ -20,6 +20,9 @@ RUN apt-get install -yq build-essential \
   uuid \
   uuid-dev \
   perl \
+  curl \
+  jq \
+  unzip \
   libssl-dev \
   perl-doc \
   liburi-perl \

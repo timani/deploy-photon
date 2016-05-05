@@ -3,7 +3,7 @@ resources:
   type: git
   source:
     uri: git@github.com:virtmerlin/deploy-photon.git
-    branch: master
+    branch: dev
     private_key: {{githubsshkey}}
 
 - name: bosh-photon-cpi-release
@@ -164,6 +164,8 @@ jobs:
         bosh_deployment_network_gw: {{bosh_deployment_network_gw}}
         bosh_deployment_network_dns: {{bosh_deployment_network_dns}}
         bosh_deployment_network_ip: {{bosh_deployment_network_ip}}
+        bosh_deployment_user: {{bosh_deployment_user}}
+        bosh_deployment_passwd: {{bosh_deployment_passwd}}
         photon_user: {{photon_user}}
         photon_passwd: {{photon_passwd}}
         photon_ignore_cert: {{photon_ignore_cert}}
@@ -188,9 +190,10 @@ jobs:
         - name: deploy-photon
       run:
         path: deploy-photon/ci/tasks/deploy-pcf.sh
-        args: [ert,{{pcf_ert_version}}]
+        args: [elastic-runtime,{{pcf_ert_version}}]
       params:
         ova_ip: {{ova_ip}}
         bosh_manifest: {{bosh_manifest}}
         bosh_deployment_network_ip: {{bosh_deployment_network_ip}}
         pcf_ert_version: {{pcf_ert_version}}
+        pcf_pivnet_token: {{pcf_pivnet_token}}
