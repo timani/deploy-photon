@@ -1,10 +1,10 @@
 #!/bin/bash
 
 #TMP DEBUG VARS
-pcf_pivnet_token=w5xBrSWhbiPwKxL95y_e
-bosh_deployment_network_ip="192.168.100.9"
-bosh_deployment_user=admin
-bosh_deployment_passwd=admin
+#pcf_pivnet_token=w5xBrSWhbiPwKxL95y_e
+#bosh_deployment_network_ip="192.168.100.9"
+#bosh_deployment_user=admin
+#bosh_deployment_passwd=admin
 ################
 
 if [ -z $1 ] ; then
@@ -47,7 +47,7 @@ cd /tmp/$1
 echo "Downloading $1 $2 version from $PIVNET_LINK ..."
   curl -H "Authorization: Token ${pcf_pivnet_token}"  -X POST https://network.pivotal.io/api/v2/products/$1/releases/$PIVNET_REL_ID/eula_acceptance
   echo
-  #wget -O /tmp/${1}/${1}-${2}.pivotal --post-data="" --header="Authorization: Token ${pcf_pivnet_token}" ${PIVNET_LINK}
+  wget -O /tmp/${1}/${1}-${2}.pivotal --post-data="" --header="Authorization: Token ${pcf_pivnet_token}" ${PIVNET_LINK}
 
 unzip ${1}-${2}.pivotal
 cd /tmp/$1/releases
