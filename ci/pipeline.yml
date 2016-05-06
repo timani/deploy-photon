@@ -200,3 +200,27 @@ jobs:
         bosh_deployment_passwd: {{bosh_deployment_passwd}}
         pcf_ert_version: {{pcf_ert_version}}
         pcf_pivnet_token: {{pcf_pivnet_token}}
+
+- name: p2-task3-Deploy-PCF
+  serial: true
+  max_in_flight: 1
+  serial_groups: [full]
+  plan:
+  - get: photon-run-id
+    trigger: false
+    passed: [p2-task2-Upload-PCF]
+  - get: deploy-photon
+    trigger: false
+  - task: p2-3-deploy-ERT
+    config:
+      platform: linux
+      image: docker:///virtmerlin/deploy-worker
+      inputs:
+        - name: deploy-photon
+      run:
+        path: deploy-photon/ci/tasks/deploy-pcf.sh
+      params:
+        bosh_deployment_network_ip: {{bosh_deployment_network_ip}}
+        bosh_deployment_user: {{bosh_deployment_user}}
+        bosh_deployment_passwd: {{bosh_deployment_passwd}}
+        pcf_manifest: {{pcf_manifest}}

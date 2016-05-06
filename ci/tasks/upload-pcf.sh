@@ -144,5 +144,5 @@ set -e
     exit 1
   else
     echo "MD5 matches for /tmp/${1}/stemcell-${STEMCELL_CPI}-${STEMCELL_VER}.tgz"
-    bosh -n upload stemcell /tmp/${1}/stemcell-${STEMCELL_CPI}-${STEMCELL_VER}.tgz
+    bosh -n upload stemcell /tmp/${1}/stemcell-${STEMCELL_CPI}-${STEMCELL_VER}.tgz --skip-if-exists
   fi
