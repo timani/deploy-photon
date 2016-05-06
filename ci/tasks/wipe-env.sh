@@ -1,6 +1,6 @@
 #!/bin/bash +x
 
-# function to parse one ip or one ip range
+# Function to parse one ip or one ip range
 function parseIP() {
 	IFS='-' read -r -a RANGESPLIT <<< "$1"
 	SIZE=${#RANGESPLIT[@]}
@@ -9,6 +9,24 @@ function parseIP() {
         exit 1
 	fi
 	prips ${RANGESPLIT[0]} ${RANGESPLIT[${SIZE}-1]} 2>/dev/null || echo "null"
+}
+
+# Function to parse address_ranges of each host block
+function parseHostBlockIP() {
+    declare -a HOSTS=()
+    VAL=(hosts.$1.address_ranges)
+    TEMPVAL=$(cat deploy-photon/manifests/photon/$photon_manifest | shyaml get-values $VAL 2>/dev/null || \
+              cat deploy-photon/manifests/photon/$photon_manifest | shyaml get-value $VAL 2>/dev/null || echo "null")
+    if [[ $TEMPVAL =~ ^.*\,.*$ ]]; then
+        IFS=',' read -r -a TEMPVALSPLIT <<< "$TEMPVAL"
+        for (( z=${#TEMPVALSPLIT[@]}-1; z>=0; z--)); do
+            HOSTS+=($(parseIP "${TEMPVALSPLIT[$z]}"))
+        done
+    else
+        HOSTS+=($(parseIP "${TEMPVAL}"))
+    fi
+
+    printf "%s\n" "${HOSTS[@]}" | sort -u | grep -v null
 }
 
 
@@ -22,23 +40,6 @@ if [ $arg_wipe == "wipe" ];
                 exit 1
 fi
 
-ESX_USER=$esx_user
-ESX_PASSWD=$esx_passwd
-
-IFS=',' read -r -a ESX_HOSTS <<< "$esx_hosts"
-
-
-#Grab Host IP Addresses & PowerOff/Unregister VMS
-for x in "${ESX_HOSTS[@]}"; do
-    echo "Removing VMs From host=$x ..."
-    for VM in $(vmware-cmd -U $ESX_USER -P $ESX_PASSWD --server $x -l | grep -v "vRLI"); do
-        if [ $VM != "No virtual machine found." ]; then
-            vmware-cmd -U $ESX_USER -P $ESX_PASSWD --server $x $VM stop hard
-            vmware-cmd -U $ESX_USER -P $ESX_PASSWD --server $x -s unregister $VM
-        fi
-    done
-done
-
 #Detect & Clean DataStore(s)
 if [ ! -f deploy-photon/manifests/photon/$photon_manifest ]; then
     echo "Error: Photon Manifest not found!  I got this value for \$photon_manifest="$photon_manifest
@@ -48,25 +49,31 @@ fi
 # How Many Hosts subvalues exist in the Manifest
 HOST_COUNT=$(cat deploy-photon/manifests/photon/$photon_manifest | shyaml get-values hosts | grep address_ranges | wc -l)
 
+#Grab Host IP Addresses & PowerOff/Unregister VMS
+for (( x=${HOST_COUNT}-1; x>=0; x--)); do
+    declare -a HOSTS=()
+    HOSTS+=($(parseHostBlockIP "$x"))
+
+    ESX_USER=$(cat deploy-photon/manifests/photon/$photon_manifest | shyaml get-value hosts.$x.username)
+    ESX_PASSWD=$(cat deploy-photon/manifests/photon/$photon_manifest | shyaml get-value hosts.$x.password)
+
+    # PowerOff/Unregister VMS
+    for h in ${HOSTS[@]}; do
+        echo "Removing VMs From host=$h ..."
+        for VM in $(vmware-cmd -U $ESX_USER -P $ESX_PASSWD --server $h -l | grep -v "vRLI"); do
+            if [ $VM != "No virtual machine found." ]; then
+                vmware-cmd -U $ESX_USER -P $ESX_PASSWD --server $h $VM stop hard
+                vmware-cmd -U $ESX_USER -P $ESX_PASSWD --server $h -s unregister $VM
+            fi
+        done
+    done
+done
+
 for (( x=${HOST_COUNT}-1; x>=0; x--)); do
     declare -a HOSTS=()
     declare -a DATASTORES=()
 
-    # Use shyaml to get all hosts in each host block
-    declare -a VALS=()
-    VALS+=(hosts.$x.address_ranges)
-    for (( y=${#VALS[@]}-1; y>=0; y--)); do
-        TEMPVAL=$(cat deploy-photon/manifests/photon/$photon_manifest | shyaml get-values ${VALS[$y]} 2>/dev/null || \
-                  cat deploy-photon/manifests/photon/$photon_manifest | shyaml get-value ${VALS[$y]} 2>/dev/null || echo "null")
-        if [[ $TEMPVAL =~ ^.*\,.*$ ]]; then
-            IFS=',' read -r -a TEMPVALSPLIT <<< "$TEMPVAL"
-            for (( z=${#TEMPVALSPLIT[@]}-1; z>=0; z--)); do
-                HOSTS+=($(parseIP "${TEMPVALSPLIT[$z]}"))
-            done
-        else
-            HOSTS+=($(parseIP "${TEMPVAL}"))
-        fi
-    done
+    HOSTS+=($(parseHostBlockIP "$x"))
 
     # Use shyaml to get all datastores in each host block
     declare -a VALS=()
@@ -91,8 +98,10 @@ for (( x=${HOST_COUNT}-1; x>=0; x--)); do
     done
 
     # Sort to Unique Values
-    HOSTS=($(printf "%s\n" "${HOSTS[@]}" | sort -u | grep -v null))
     DATASTORES=($(printf "%s\n" "${DATASTORES[@]}" | sort -u | grep -v null))
+
+    ESX_USER=$(cat deploy-photon/manifests/photon/$photon_manifest | shyaml get-value hosts.$x.username)
+    ESX_PASSWD=$(cat deploy-photon/manifests/photon/$photon_manifest | shyaml get-value hosts.$x.password)
 
     # Clean Datastores
     for h in ${HOSTS[@]}; do
