@@ -3,7 +3,7 @@ resources:
   type: git
   source:
     uri: git@github.com:virtmerlin/deploy-photon.git
-    branch: master
+    branch: dev
     private_key: {{githubsshkey}}
 
 - name: bosh-photon-cpi-release
@@ -172,7 +172,7 @@ jobs:
         photon_tenant: {{photon_tenant}}
         photon_project: {{photon_project}}
 
-- name: p2-task2-Deploy-PCF
+- name: p2-task2-Upload-PCF
   serial: true
   max_in_flight: 1
   serial_groups: [full]
@@ -189,10 +189,11 @@ jobs:
       inputs:
         - name: deploy-photon
       run:
-        path: deploy-photon/ci/tasks/deploy-pcf.sh
+        path: deploy-photon/ci/tasks/upload-pcf.sh
         args: [elastic-runtime,{{pcf_ert_version}}]
       params:
         ova_ip: {{ova_ip}}
+        bosh_cpi: {{bosh_cpi}}
         bosh_manifest: {{bosh_manifest}}
         bosh_deployment_network_ip: {{bosh_deployment_network_ip}}
         bosh_deployment_user: {{bosh_deployment_user}}

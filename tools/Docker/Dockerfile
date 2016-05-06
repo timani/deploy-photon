@@ -9,10 +9,12 @@ RUN apt-get update
 RUN apt-get install -yq build-essential \
   ruby ruby-dev \
   libxml2-dev \
+  libxml2-utils \
   libsqlite3-dev \
   libxslt1-dev \
   libpq-dev \
   libmysqlclient-dev \
+  prips \
   wget \
   gcc \
   gcc-multilib \

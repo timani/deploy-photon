@@ -98,7 +98,7 @@ jobs:
           - {name: hm, password: hm-password}
 
     hm:
-      director_account: {user: admin, password: admin}
+      director_account: {user: BOSH_DEPLOYMENT_USER, password: BOSH_DEPLOYMENT_PASSWORD}
       resurrector_enabled: true
 
     dns:
