@@ -182,7 +182,7 @@ jobs:
     passed: [p2-task1-Deploy-BOSH]
   - get: deploy-photon
     trigger: false
-  - task: p2-2-deploy-ERT
+  - task: p2-2-upload-ERT
     config:
       platform: linux
       image: docker:///virtmerlin/deploy-worker
