@@ -70,12 +70,16 @@ for (( x=${HOST_COUNT}-1; x>=0; x--)); do
 
     # Use shyaml to get all datastores in each host block
     declare -a VALS=()
-    VALS+=(hosts.$x.metadata.ALLOWED_DATASTORES)
-    VALS+=(hosts.$x.metadata.MANAGEMENT_DATASTORE)
     VALS+=(deployment.image_datastores)
+    VALS+=(hosts.$x.metadata.MANAGEMENT_DATASTORE)
+    VALS+=(hosts.$x.metadata.ALLOWED_DATASTORES)
     for (( y=${#VALS[@]}-1; y>=0; y--)); do
         TEMPVAL=$(cat deploy-photon/manifests/photon/$photon_manifest | shyaml get-values ${VALS[$y]} 2>/dev/null || \
                   cat deploy-photon/manifests/photon/$photon_manifest | shyaml get-value ${VALS[$y]} 2>/dev/null || echo "null")
+        # If no ALLOWED_DATASTORES, clean up all datastores
+        if [[ ${y} -eq $((${#VALS[@]}-1)) && ${TEMPVAL} == "null" ]]; then
+            break
+        fi
         if [[ $TEMPVAL =~ ^.*\,.*$ ]]; then
             IFS=',' read -r -a TEMPVALSPLIT <<< "$TEMPVAL"
             for (( z=${#TEMPVALSPLIT[@]}-1; z>=0; z--)); do
@@ -92,6 +96,9 @@ for (( x=${HOST_COUNT}-1; x>=0; x--)); do
 
     # Clean Datastores
     for h in ${HOSTS[@]}; do
+        if [ ${#DATASTORES[@]} -eq 0 ]; then
+            DATASTORES+=($(vifs --server $h --username $ESX_USER --password $ESX_PASSWD --listds | sed 1,4d))
+        fi
         for d in ${DATASTORES[@]}; do
             echo "cleaning up datastore ${d} on host ${h}"
             vifs --server $h --username $ESX_USER --password $ESX_PASSWD --rm  "[$d] disks" --force || echo "Already Wiped"
