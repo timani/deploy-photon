@@ -1,5 +1,18 @@
 #!/bin/bash +x
 
+# function to parse one ip or one ip range
+function parseIP() {
+	IFS='-' read -r -a RANGESPLIT <<< "$1"
+	SIZE=${#RANGESPLIT[@]}
+	if (( ${SIZE} > 2 || ${SIZE} < 1 )); then
+	    echo "null"
+        exit 1
+	fi
+	prips ${RANGESPLIT[0]} ${RANGESPLIT[${SIZE}-1]} 2>/dev/null || echo "null"
+}
+
+
+
 if [ $arg_wipe == "wipe" ];
         then
                 echo "Wiping Environment...."
@@ -42,17 +55,16 @@ for (( x=${HOST_COUNT}-1; x>=0; x--)); do
     # Use shyaml to get all hosts in each host block
     declare -a VALS=()
     VALS+=(hosts.$x.address_ranges)
-
     for (( y=${#VALS[@]}-1; y>=0; y--)); do
         TEMPVAL=$(cat deploy-photon/manifests/photon/$photon_manifest | shyaml get-values ${VALS[$y]} 2>/dev/null || \
-                  cat deploy-photon/manifests/photon/$photon_manifest | shyaml get-value ${VALS[$y]} 2>/dev/null)
+                  cat deploy-photon/manifests/photon/$photon_manifest | shyaml get-value ${VALS[$y]} 2>/dev/null || echo "null")
         if [[ $TEMPVAL =~ ^.*\,.*$ ]]; then
             IFS=',' read -r -a TEMPVALSPLIT <<< "$TEMPVAL"
             for (( z=${#TEMPVALSPLIT[@]}-1; z>=0; z--)); do
-                HOSTS+=(${TEMPVALSPLIT[$z]})
+                HOSTS+=($(parseIP "${TEMPVALSPLIT[$z]}"))
             done
         else
-            HOSTS+=(${TEMPVAL})
+            HOSTS+=($(parseIP "${TEMPVAL}"))
         fi
     done
 
@@ -63,7 +75,7 @@ for (( x=${HOST_COUNT}-1; x>=0; x--)); do
     VALS+=(deployment.image_datastores)
     for (( y=${#VALS[@]}-1; y>=0; y--)); do
         TEMPVAL=$(cat deploy-photon/manifests/photon/$photon_manifest | shyaml get-values ${VALS[$y]} 2>/dev/null || \
-                  cat deploy-photon/manifests/photon/$photon_manifest | shyaml get-value ${VALS[$y]} 2>/dev/null)
+                  cat deploy-photon/manifests/photon/$photon_manifest | shyaml get-value ${VALS[$y]} 2>/dev/null || echo "null")
         if [[ $TEMPVAL =~ ^.*\,.*$ ]]; then
             IFS=',' read -r -a TEMPVALSPLIT <<< "$TEMPVAL"
             for (( z=${#TEMPVALSPLIT[@]}-1; z>=0; z--)); do
