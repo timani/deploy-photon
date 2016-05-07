@@ -64,6 +64,7 @@ jobs:
       address: 127.0.0.1
       user: nats
       password: nats-password
+      port: 4222
 
     postgres: &db
       listen_address: 127.0.0.1
@@ -84,6 +85,10 @@ jobs:
       provider: dav
       director: {user: director, password: director-password}
       agent: {user: agent, password: agent-password}
+      options:
+        endpoint: http://BOSH_DEPLOYMENT_NETWORK_IP:25250
+        user: agent
+        password: agent-password
 
     director:
       address: 127.0.0.1
@@ -94,10 +99,11 @@ jobs:
         provider: local
         local:
           users:
-          - {name: admin, password: admin}
+          - {name: BOSH_DEPLOYMENT_USER, password: BOSH_DEPLOYMENT_PASSWD}
           - {name: hm, password: hm-password}
 
     hm:
+      http: {user: hm, password: hm-password}
       director_account: {user: BOSH_DEPLOYMENT_USER, password: BOSH_DEPLOYMENT_PASSWORD}
       resurrector_enabled: true
 

@@ -101,6 +101,8 @@ perl -pi -e "s/BOSH_DEPLOYMENT_NETWORK_SUBNET/$BOSH_DEPLOYMENT_NETWORK_SUBNET_RE
 perl -pi -e "s/BOSH_DEPLOYMENT_NETWORK_GW/$bosh_deployment_network_gw/g" /tmp/bosh.yml
 perl -pi -e "s/BOSH_DEPLOYMENT_NETWORK_DNS/$bosh_deployment_network_dns/g" /tmp/bosh.yml
 perl -pi -e "s/BOSH_DEPLOYMENT_NETWORK_IP/$bosh_deployment_network_ip/g" /tmp/bosh.yml
+perl -pi -e "s/BOSH_DEPLOYMENT_USER/$bosh_deployment_user/g" /tmp/bosh.yml
+perl -pi -e "s/BOSH_DEPLOYMENT_PASSWD/$bosh_deployment_passwd/g" /tmp/bosh.yml
 
 # Deploy BOSH
 echo "Deploying BOSH ..."
@@ -109,9 +111,9 @@ bosh-init deploy /tmp/bosh.yml
 # Target Bosh and test Status Reply
 echo "sleep 3 minutes while BOSH starts..."
 sleep 180
-BOSH_TARGET=$(cat /tmp/bosh.yml | shyaml get-values jobs.0.networks.0.static_ips)
-BOSH_LOGIN=$(cat /tmp/bosh.yml | shyaml get-value jobs.0.properties.director.user_management.local.users.0.name)
-BOSH_PASSWD=$(cat /tmp/bosh.yml | shyaml get-value jobs.0.properties.director.user_management.local.users.0.password)
-bosh -n target https://${BOSH_TARGET}
-bosh -n login ${BOSH_LOGIN} ${BOSH_PASSWD}
+#BOSH_TARGET=$(cat /tmp/bosh.yml | shyaml get-values jobs.0.networks.0.static_ips)
+#BOSH_LOGIN=$(cat /tmp/bosh.yml | shyaml get-value jobs.0.properties.director.user_management.local.users.0.name)
+#BOSH_PASSWD=$(cat /tmp/bosh.yml | shyaml get-value jobs.0.properties.director.user_management.local.users.0.password)
+bosh -n target https://${bosh_deployment_network_ip}
+bosh -n login ${bosh_deployment_user} ${bosh_deployment_passwd}
 bosh status
