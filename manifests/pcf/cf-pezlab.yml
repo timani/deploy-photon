@@ -1,6 +1,6 @@
 ---
 name: cf-photon
-director_uuid: be736358-4345-436a-825c-b1bd803e2dee
+director_uuid: 953673d8-25b2-43f4-9e1b-d1681a44e13f
 releases:
 - name: cf-mysql
   version: '25.2'
@@ -311,7 +311,7 @@ resource_pools:
     version: 3215
   network: net-9771d1c767187fc21618
   cloud_properties:
-    vm_flavor: core-200
+    vm_flavor: core-100
     disk_flavor: core-200
     vm_attached_disk_size_gb: 2
   env:
@@ -2154,7 +2154,7 @@ jobs:
     - dns
     - gateway
     static_ips:
-      - 10.65.170.16
+      - 10.65.170.20
   properties:
     ha_proxy:
       disable_http: false
@@ -3402,7 +3402,7 @@ jobs:
     - dns
     - gateway
     static_ips:
-    - 10.65.170.20
+    - 10.65.170.19
   properties:
     diego:
       auctioneer:
@@ -4492,7 +4492,7 @@ jobs:
   - name: metron_agent
     release: cf
   lifecycle: service
-  instances: 3
+  instances: 2
   resource_pool: diego_cell-partition
   networks:
   - name: net-9771d1c767187fc21618
