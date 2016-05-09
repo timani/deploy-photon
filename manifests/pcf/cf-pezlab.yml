@@ -4492,7 +4492,7 @@ jobs:
   - name: metron_agent
     release: cf
   lifecycle: service
-  instances: 2
+  instances: 1
   resource_pool: diego_cell-partition
   networks:
   - name: net-9771d1c767187fc21618
