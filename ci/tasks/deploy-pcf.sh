@@ -2,7 +2,7 @@
 set -e
 
 if [ ! -f manifests/pcf/${pcf_manifest} ]; then
-  echo "ERROR, Can't find ERT Manifest"
+  echo "ERROR, Can't find ERT Manifest ${pcf_manifest}"
   exit 1
 fi
 
