@@ -110,13 +110,12 @@ for (( x=${HOST_COUNT}-1; x>=0; x--)); do
         fi
         for d in ${DATASTORES[@]}; do
             echo "cleaning up datastore ${d} on host ${h}"
-            vifs --server $h --username $ESX_USER --password $ESX_PASSWD --rm  "[$d] disks" --force || echo "Already Wiped"
-            vifs --server $h --username $ESX_USER --password $ESX_PASSWD --rm  "[$d] tmp_images" --force || echo "Already Wiped"
-            vifs --server $h --username $ESX_USER --password $ESX_PASSWD --rm  "[$d] tmp_uploads" --force || echo "Already Wiped"
-            vifs --server $h --username $ESX_USER --password $ESX_PASSWD --rm  "[$d] images" --force || echo "Already Wiped"
-            vifs --server $h --username $ESX_USER --password $ESX_PASSWD --rm  "[$d] vms" --force || echo "Already Wiped"
-            vifs --server $h --username $ESX_USER --password $ESX_PASSWD --rm  "[$d] vibs" --force || echo "Already Wiped"
-            vifs --server $h --username $ESX_USER --password $ESX_PASSWD --rm  "[$d] deleted_images" --force || echo "Already Wiped"
+            DIRECTORIES=($(vifs --server $h --username $ESX_USER --password $ESX_PASSWD --dir "[$d]" | sed 1,4d))
+            for dir in ${DIRECTORIES[@]}; do
+                if [[ $dir == disk* || $dir == tmp_image* || $dir == tmp_upload* || $dir == image* || $dir == vm* || $dir == deleted_image* ]]; then
+                    vifs --server $h --username $ESX_USER --password $ESX_PASSWD --rm  "[$d] $dir" --force || echo "Already Wiped"
+                fi
+            done
         done
     done
 done
