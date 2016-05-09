@@ -1,19 +1,19 @@
 # Overview
 
-This repo contains a pipleine that can be levraged to deploy PCF+Photon ontop of a pre-existing set of ESX clusters
+This repo contains a pipleine that can be leveraged to deploy PCF+Photon on top of a pre-existing set of ESX clusters
 
 ## Pre-Requisites
 
 
-* Photon: ESX Hosts (not managed by vCenter & Sized to PCF guidlelines [here](http://pcfsizer.cfapps.pez.pivotal.io)).
+* Photon: ESX Hosts (not managed by vCenter & Sized to PCF guidelines [here](http://pcfsizer.cfapps.pez.pivotal.io)).
 * Photon: Consistent portgroup(s) across all ESX hosts fro PCF Deployment Network.
 * Concourse: S3 Bucket & AWS Key/Secret with access
-* Concourse: A consourse instance where worker nodes have access to dockerhub, github, & pivnet
+* Concourse: A concourse instance where worker nodes have access to dockerhub, github, & pivnet
 
 ## Steps to use this pipeline
 
 1. `git clone git@github.com:virtmerlin/deploy-photon.git` to clone the repo
-2. edit the **pipeline parameters** yml for yor environment (see below for example)
+2. edit the **pipeline parameters** yml for your environment (see below for example)
 3. create photon.yml for your photon deployment and place in *deploy-photon/manifests/photon*
 4. create cf.yml for your photon deployment and place in *deploy-photon/manifests/pcf*
 5. `fly -t [target] set-pipeline -p deploy-photon -c deploy-photon/ci/pipeline.yml -l parameters.yml` to setup the pipeline
@@ -79,12 +79,12 @@ photon_manifest: photon-pezlab.yml
 # Param for which CPI to build : example [latest|0.8.0|0.8.0.u1|0.9.0]
 photon_release: latest
 
-# Params for Photon Platfrom auth user
+# Params for Photon Platform auth user
 photon_user: dev
 photon_passwd: photon
 photon_ignore_cert: true
 
-# Params for Photon Platfrom tenant & project
+# Params for Photon Platform tenant & project
 photon_tenant: pezlab-tenant
 photon_project: pezlab-proj
 
