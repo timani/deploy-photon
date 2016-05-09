@@ -178,7 +178,7 @@ jobs:
   serial_groups: [full]
   plan:
   - get: photon-run-id
-    trigger: false
+    trigger: true
     passed: [p2-task1-Deploy-BOSH]
   - get: deploy-photon
     trigger: false
@@ -207,7 +207,7 @@ jobs:
   serial_groups: [full]
   plan:
   - get: photon-run-id
-    trigger: false
+    trigger: true
     passed: [p2-task2-Upload-PCF]
   - get: deploy-photon
     trigger: false
