@@ -1,6 +1,6 @@
 ---
 name: cf-photon
-director_uuid: 953673d8-25b2-43f4-9e1b-d1681a44e13f
+director_uuid: ignore
 releases:
 - name: cf-mysql
   version: '25.2'
