@@ -1,9 +1,12 @@
 #!/bin/bash
+set -e
 
+photon target set http://${ova_ip}:9000
 
 #Destory Existing Deployments
-photon target set http://${ova_ip}:9000
-photon system destroy
+if (( $(photon -n deployment list | head -1) > 0 )); then
+    photon system destroy
+fi
 
 #Deploy Photon Controller
 photon system deploy deploy-photon/manifests/photon/$photon_manifest 2>&1
