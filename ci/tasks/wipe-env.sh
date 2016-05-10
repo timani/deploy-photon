@@ -1,4 +1,5 @@
 #!/bin/bash +x
+set -e
 
 # Function to parse one ip or one ip range
 function parseIP() {
