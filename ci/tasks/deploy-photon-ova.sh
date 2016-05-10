@@ -3,7 +3,11 @@ set -e
 
 #Get Latest Photon Installer
 echo "Downloading PHOTON Installer ova..."
-wget $(wget -q -O- https://github.com/vmware/photon-controller/wiki/download | grep "install-vm.ova" | egrep -o http.*\" | tr -d "\"") -O /tmp/installer-vm.ova
+if [[ $ova_url == "latest" || -z "$ova_url" ]]; then
+  echo "Using default url."
+  ova_url=$(wget -q -O- https://github.com/vmware/photon-controller/wiki/download | grep "install-vm.ova" | egrep -o http.*\" | tr -d "\"")
+fi
+wget ${ova_url} -O /tmp/installer-vm.ova
 
 ovftool --acceptAllEulas --noSSLVerify --skipManifestCheck \
 --X:injectOvfEnv --overwrite --powerOffTarget --powerOn \

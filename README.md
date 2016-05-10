@@ -90,6 +90,7 @@ photon_tenant: pezlab-tenant
 photon_project: pezlab-proj
 
 # Params for ovftool to install "photon-installer"
+ova_url: [installer ova download url]
 ova_network: Mgmt
 ova_datastore: FS_PEZ_NFS_HAAS04
 ova_ip: 10.65.162.14
