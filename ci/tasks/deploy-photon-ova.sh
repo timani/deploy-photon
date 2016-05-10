@@ -8,7 +8,7 @@ wget $(wget -q -O- https://github.com/vmware/photon-controller/wiki/download | g
 ovftool --acceptAllEulas --noSSLVerify --skipManifestCheck \
 --X:injectOvfEnv --overwrite --powerOffTarget --powerOn \
 --diskMode=thin \
---net:"NAT"=${ova_network} \
+--net:"NAT"="${ova_network}" \
 --datastore=${ova_datastore} \
 --name=photon-installer \
 --prop:ip0=${ova_ip} \
