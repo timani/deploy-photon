@@ -1,5 +1,5 @@
 #!/bin/bash +x
-
+set -e
 
 #Get Latest Photon Installer
 echo "Downloading PHOTON Installer ova..."
