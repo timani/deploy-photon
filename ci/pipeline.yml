@@ -159,6 +159,7 @@ jobs:
         ova_ip: {{ova_ip}}
         photon_release: {{photon_release}}
         bosh_manifest: {{bosh_manifest}}
+        bosh_deployment_network_name: {{bosh_deployment_network_name}}
         bosh_deployment_network: {{bosh_deployment_network}}
         bosh_deployment_network_subnet: {{bosh_deployment_network_subnet}}
         bosh_deployment_network_gw: {{bosh_deployment_network_gw}}

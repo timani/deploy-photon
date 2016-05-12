@@ -48,6 +48,7 @@ bosh_manifest: bosh-template-v1.yml
 
 # Bosh manifest network params
 bosh_cpi: photon
+bosh_deployment_network_name: boshNetwork
 bosh_deployment_network: Photon_PCF
 bosh_deployment_network_subnet: "10.65.170.0/24"
 bosh_deployment_network_gw: 10.65.170.1
