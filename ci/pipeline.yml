@@ -10,7 +10,7 @@ resources:
   type: git
   source:
     uri: git@github.com:vmware/bosh-photon-cpi-release.git
-    branch: master
+    branch: develop
     private_key: {{githubsshkey}}
 
 
