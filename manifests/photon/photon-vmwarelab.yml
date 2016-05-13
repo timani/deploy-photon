@@ -13,7 +13,6 @@ hosts:
   - MGMT
   - CLOUD
   metadata:
-    ALLOWED_NETWORKS: "VM VLAN"
     ALLOWED_DATASTORES: wdc-ucs-ch5-2
     MANAGEMENT_DATASTORE: wdc-ucs-ch5-2
     MANAGEMENT_NETWORK_DNS_SERVER : 10.142.7.1
@@ -27,5 +26,4 @@ hosts:
   usage_tags:
   - CLOUD
   metadata:
-    ALLOWED_NETWORKS: "VM VLAN"
     ALLOWED_DATASTORES: wdc-ucs-ch5-2
