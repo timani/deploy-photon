@@ -1,5 +1,6 @@
 ---
 deployment:
+  resume_system: true
   image_datastores: wdc-ucs-ch5-3
   use_image_datastore_for_vms: false
   auth_enabled: false
