@@ -39,7 +39,7 @@ networks:
     - 10.146.56.1-10.146.63.130
     - 10.146.63.231-10.146.63.239
     cloud_properties:
-      network_id: c7056af1-72d5-4fc6-970c-a111d7f13942
+      network_id: replace_network_id
 resource_pools:
 - name: consul_server-partition
   stemcell:

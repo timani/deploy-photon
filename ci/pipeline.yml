@@ -224,7 +224,10 @@ jobs:
       run:
         path: deploy-photon/ci/tasks/deploy-pcf.sh
       params:
+        ova_ip: {{ova_ip}}
+        bosh_deployment_network: {{bosh_deployment_network}}
         bosh_deployment_network_ip: {{bosh_deployment_network_ip}}
         bosh_deployment_user: {{bosh_deployment_user}}
         bosh_deployment_passwd: {{bosh_deployment_passwd}}
         pcf_manifest: {{pcf_manifest}}
+        cli_url: {{cli_url}}
