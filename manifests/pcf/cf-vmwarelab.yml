@@ -1539,7 +1539,7 @@ jobs:
     - 10.146.63.157
   properties:
     network_name: net-9771d1c767187fc21618
-    external_host: p-mysql.internal.cf.haas-02.pcf.vmware.com
+    external_host: p-mysql.internal.pcf.vmware.com
     proxy:
       api_password: a139cd6ef895fb96a5ed
       api_username: admin
@@ -1832,11 +1832,11 @@ jobs:
   properties:
     app_ssh:
       host_key_fingerprint: 9d:fb:3c:63:b5:fa:be:c2:50:cc:a6:a7:31:f4:a8:4b
-    domain: cf.haas-02.pcf.vmware.com
-    system_domain: cf.haas-02.pcf.vmware.com
+    domain: pcf.vmware.com
+    system_domain: pcf.vmware.com
     system_domain_organization: system
     app_domains:
-    - cf.haas-02.pcf.vmware.com
+    - pcf.vmware.com
     support_address: https://support.pivotal.io
     route_registrar:
       routes:
@@ -1846,7 +1846,7 @@ jobs:
         tags:
           component: CloudController
         uris:
-        - api.cf.haas-02.pcf.vmware.com
+        - api.pcf.vmware.com
       nats:
         user: nats
         password: fd38f77b987c75d625fe
@@ -1855,7 +1855,7 @@ jobs:
         - 10.146.63.141
     cc:
       allowed_cors_domains:
-      - https://apm.cf.haas-02.pcf.vmware.com
+      - https://apm.pcf.vmware.com
       allow_app_ssh_access: true
       default_to_diego_backend: true
       buildpacks:
@@ -2085,7 +2085,7 @@ jobs:
     nfs_server:
       address: 10.146.63.147
     uaa:
-      url: https://uaa.cf.haas-02.pcf.vmware.com
+      url: https://uaa.pcf.vmware.com
       jwt:
         verification_key: |
           -----BEGIN PUBLIC KEY-----
@@ -2106,7 +2106,7 @@ jobs:
         cc_routing:
           secret: ccc6d8ee5abd8baf4f51
     login:
-      url: https://login.cf.haas-02.pcf.vmware.com
+      url: https://login.pcf.vmware.com
     ssl:
       skip_cert_verify: true
     logger_endpoint:
@@ -2335,14 +2335,14 @@ jobs:
     - dns
     - gateway
   properties:
-    domain: cf.haas-02.pcf.vmware.com
-    system_domain: cf.haas-02.pcf.vmware.com
+    domain: pcf.vmware.com
+    system_domain: pcf.vmware.com
     system_domain_organization: system
     app_domains:
-    - cf.haas-02.pcf.vmware.com
+    - pcf.vmware.com
     cc:
       allowed_cors_domains:
-      - https://apm.cf.haas-02.pcf.vmware.com
+      - https://apm.pcf.vmware.com
       allow_app_ssh_access: true
       buildpacks:
         blobstore_type: fog
@@ -2528,7 +2528,7 @@ jobs:
         44P36ynub0w4o0MEVGOilB4jJJQAATgWwozVzOn4x26anfhCVl9h9uU=
         -----END RSA PRIVATE KEY-----
     uaa:
-      url: https://uaa.cf.haas-02.pcf.vmware.com
+      url: https://uaa.pcf.vmware.com
       jwt:
         verification_key: |
           -----BEGIN PUBLIC KEY-----
@@ -2544,7 +2544,7 @@ jobs:
         cc-service-dashboards:
           secret: bd01ad313aa50fcb846c
     login:
-      url: https://login.cf.haas-02.pcf.vmware.com
+      url: https://login.pcf.vmware.com
     logger_endpoint:
       port:
     ssl:
@@ -2589,14 +2589,14 @@ jobs:
     - dns
     - gateway
   properties:
-    domain: cf.haas-02.pcf.vmware.com
-    system_domain: cf.haas-02.pcf.vmware.com
+    domain: pcf.vmware.com
+    system_domain: pcf.vmware.com
     system_domain_organization: system
     app_domains:
-    - cf.haas-02.pcf.vmware.com
+    - pcf.vmware.com
     cc:
       allowed_cors_domains:
-      - https://apm.cf.haas-02.pcf.vmware.com
+      - https://apm.pcf.vmware.com
       allow_app_ssh_access: true
       buildpacks:
         blobstore_type: fog
@@ -2789,7 +2789,7 @@ jobs:
     nfs_server:
       address: 10.146.63.147
     uaa:
-      url: https://uaa.cf.haas-02.pcf.vmware.com
+      url: https://uaa.pcf.vmware.com
       jwt:
         verification_key: |
           -----BEGIN PUBLIC KEY-----
@@ -2805,7 +2805,7 @@ jobs:
         cc-service-dashboards:
           secret: bd01ad313aa50fcb846c
     login:
-      url: https://login.cf.haas-02.pcf.vmware.com
+      url: https://login.pcf.vmware.com
     logger_endpoint:
       port:
     ssl:
@@ -3006,14 +3006,14 @@ jobs:
       self_service_links_enabled: false
       protocol: https
       links:
-        home: https://apps.cf.haas-02.pcf.vmware.com
-        passwd: https://login.cf.haas-02.pcf.vmware.com/forgot_password
-        signup: https://login.cf.haas-02.pcf.vmware.com/create_account
-      uaa_base: https://uaa.cf.haas-02.pcf.vmware.com
+        home: https://apps.pcf.vmware.com
+        passwd: https://login.pcf.vmware.com/forgot_password
+        signup: https://login.pcf.vmware.com/create_account
+      uaa_base: https://uaa.pcf.vmware.com
       notifications:
-        url: https://notifications.cf.haas-02.pcf.vmware.com
+        url: https://notifications.pcf.vmware.com
       saml:
-        entityid: http://login.cf.haas-02.pcf.vmware.com
+        entityid: http://login.pcf.vmware.com
         serviceProviderKey: |
           -----BEGIN RSA PRIVATE KEY-----
           MIIEogIBAAKCAQEA3I3Je/VtZQNRBNiQ/RI82J+TsuYuClxQf66+YF525qBhqYpT
@@ -3075,8 +3075,8 @@ jobs:
           parameter:
             disable: false
             whitelist:
-            - https://console.cf.haas-02.pcf.vmware.com/
-            - https://apps.cf.haas-02.pcf.vmware.com/
+            - https://console.pcf.vmware.com/
+            - https://apps.pcf.vmware.com/
           url: "/login"
     uaa:
       authentication:
@@ -3111,7 +3111,7 @@ jobs:
       login:
         addnew: false
       catalina_opts: "-Xmx768m -XX:MaxPermSize=256m"
-      url: https://uaa.cf.haas-02.pcf.vmware.com
+      url: https://uaa.pcf.vmware.com
       jwt:
         signing_key: |
           -----BEGIN RSA PRIVATE KEY-----
@@ -3175,7 +3175,7 @@ jobs:
           authorized-grant-types: authorization_code,client_credentials,refresh_token
           autoapprove: true
           authorities: scim.zones,zones.read,uaa.resource,zones.write,cloud_controller.admin
-          redirect-uri: https://p-identity.cf.haas-02.pcf.vmware.com/dashboard/,https://p-identity.cf.haas-02.pez.pivotal.io/dashboard/*
+          redirect-uri: https://p-identity.pcf.vmware.com/dashboard/,https://p-identity.pcf.vmware.com/dashboard/*
         login:
           id: login
           secret: f936b521abb5fb319209
@@ -3195,7 +3195,7 @@ jobs:
           access-token-validity: 1209600
           refresh-token-validity: 1209600
           name: Pivotal Apps Manager
-          app-launch-url: https://apps.cf.haas-02.pcf.vmware.com
+          app-launch-url: https://apps.pcf.vmware.com
           show-on-homepage: true
           app-icon: iVBORw0KGgoAAAANSUhEUgAAAGwAAABsCAYAAACPZlfNAAAAAXNSR0IArs4c6QAABYtJREFUeAHtnVtsFFUYx7/d3ruWotUKVIkNaCw02YgJGBRTMd4CokUejD4QH4gxQcIDeHnBmPjkhSghUYLGe3ywPtAHNCo0QgkWwi2tXG2V1kIpLXTbLt1tS9dzlmzSJssZhv32zDk7/2km2znn7Pd9+/vt2Z2dmW0D9Obat4gCiwiLBQQSLflSViAQeN6Can1fYiJBFPQ9BcsAQBiEWUbAsnIxwyDMMgKWlYsZBmGWEbCsXMwwCLOMgGXlYoZBmGUELCsXMwzCLCNgWbmYYRBmGQHLysUMgzDLCFhWLmYYhFlGwLJyMcMgzDIClpWLGQZhlhGwrFzMMAizjIBl5WKGQZhlBCwrV1xbb96y59V1VFJQmLawQNrWa43x8XEaHo1fW+Oj1H8lSqf6eulEbw+dvNhLvcNDinvb0WWksAdm3UWhwiJ2gt2RAWo80UY7jrdSU8cZGrt6lT1HtgMaKSxbD7qqfDq99tAjyTUSG6FP9v1BH+3dTUPxeLZSssf17U5HeXEJbXr8aerY+A6tf7iOxFeu2OFmI6BvhaVgVoRCtHl5PTW8/AoV5xekmo299b2wlJn6+WFqWrOWKkpDqSYjbyFskpZFs++hL1e9NKnFvF+t3OmQOwzdkcgUmnnBABXm5Ys1j8qKisVadFPvS8tramn1goX09eEDU+KbsmGlsMbjbbT6x++UDOVORGXoFppXOYMerLqbVsyrpcWzqykYdH5R+fjZlcnd/8sjV5Q5vOh0rt6LqhhyJsQ3uC+ID8ry89aHYtf90W1bKLzlffr19EnH6HIP8oXasOM4LwbkrLB0MP+6cJ6e+eoz+vTP5nTdU9peDC+Ysm3Khq+ESehy5r3e2ECHu7uUDuqq59Id4iXVtMV3wqSACSHt3V2/KF3I97qayjuVY7zo9KUwCfq3M6coNjamZD6zrFzZ70Wnb4XFxseoK3JZyXzWtGnKfi86fStMwu6LRpXMZ5RBmBKQ7k75XqZa8gLmPZ/Nq0hFkLnvttJSZUT5Oc60xbfC5CGs6lsrlD56hgaV/V50+lbYkuo5VFygPp3SMwxhXjwp0+bcsGRp2vZU48TEBB09153aNObWlzNMHo1/6r4apYTmsx10MTqsHONFp5VH6zMBtWbhYtq6YpVjiJ/ajjmO8WKAL4QFxamWZffPT1678dicex05D4jTKj8cO+Q4zosBOSXs7bonktci5ovjgPIUye3ieo3wzKrk+TC5faPLGz83On6ovtFY3ONySth7Ty67qbPMk6Hu+edv+vzg/slNRv3uy52O6xk40HWW6r/94nrdRrTn1AzLhOju9tP03DfbKTo6mkmYrN/X98L6xQHgTb/vpG0t+5LnybJOPMMEvhXWOXCJvj9yiD7Yu4sGRkYyxKjv7r4RJi+Na+05Rwf/66SG1qO0v/NffZQZM+WUsI07d1BC/MTE144GYzHxJYcYDYq1vb/f8WQlI9OshsopYZubm7IKy4Tg2K03wYKLGiDMBSwThkKYCRZc1ABhLmCZMBTCTLDgogYIcwHLhKEQZoIFFzVAmAtYJgyFMBMsuKgBwlzAMmEohJlgwUUNEOYClglDIcwECy5qgDAXsEwYCmEmWHBRA4S5gGXCUAgzwYKLGow84yyvuyhR/GW19kt9Lh5ibg01UtjS7VtzizLjo8FLIiNMHaEgTAdlxhwQxghTRygI00GZMQeEMcLUEQrCdFBmzAFhjDB1hIIwHZQZc0AYI0wdoSBMB2XGHBDGCFNHKAjTQZkxB4QxwtQRCsJ0UGbMAWGMMHWEgjAdlBlzQBgjTB2hIEwHZcYcEMYIU0coCNNBmTEHhDHC1BEKwnRQZswBYYwwdYSCMB2UGXNAGCNMHaEgTAdlxhziUu1Ei8M/+WFMh1CZEUi0/A+j7hNSB5Wo2wAAAABJRU5ErkJggg==
         apps_manager_js:
@@ -3267,7 +3267,7 @@ jobs:
           authorities: notification_preferences.admin
           autoapprove: true
           override: true
-          redirect-uri: https://notifications-ui.cf.haas-02.pcf.vmware.com/sessions/create
+          redirect-uri: https://notifications-ui.pcf.vmware.com/sessions/create
         cloud_controller_username_lookup:
           id: cloud_controller_username_lookup
           secret: babfe347ad079d6a2879
@@ -3289,7 +3289,7 @@ jobs:
           secret: e3ebc9a4f2c35d2f9514
           override: true
           authorized-grant-types: authorization_code,refresh_token
-          redirect-uri: https://apm.cf.haas-02.pcf.vmware.com,https://apm.cf.haas-02.pez.pivotal.io/,https://apm.cf.haas-02.pez.pivotal.io/*,https://metrics.cf.haas-02.pez.pivotal.io,https://metrics.cf.haas-02.pez.pivotal.io/,https://metrics.cf.haas-02.pez.pivotal.io/*
+          redirect-uri: https://apm.pcf.vmware.com,https://apm.pcf.vmware.com/,https://apm.pcf.vmware.com/*,https://metrics.pcf.vmware.com,https://metrics.pcf.vmware.com/,https://metrics.pcf.vmware.com/*
           scope: cloud_controller.admin,cloud_controller.read,metrics.read
           access-token-validity: 900
           refresh-token-validity: 2628000
@@ -3323,7 +3323,7 @@ jobs:
       - tag: cc
         name: ccdb
         citext: true
-    domain: cf.haas-02.pcf.vmware.com
+    domain: pcf.vmware.com
     uaadb:
       address: 10.146.63.174
       port: 2544
@@ -3360,10 +3360,10 @@ jobs:
         port: 8080
         registration_interval: 4s
         uris:
-        - uaa.cf.haas-02.pcf.vmware.com
-        - "*.uaa.cf.haas-02.pcf.vmware.com"
-        - login.cf.haas-02.pcf.vmware.com
-        - "*.login.cf.haas-02.pcf.vmware.com"
+        - uaa.pcf.vmware.com
+        - "*.uaa.pcf.vmware.com"
+        - login.pcf.vmware.com
+        - "*.login.pcf.vmware.com"
         health_check:
           name: uaa-healthcheck
           script_path: "/var/vcap/jobs/uaa/bin/health_check"
@@ -3785,7 +3785,7 @@ jobs:
             0Y/SXw4Y8CEn5IckRcBMq6lmITHWxCSDF/zUISh0DR4Rd4xSQ09Blg==
             -----END RSA PRIVATE KEY-----
         cc:
-          base_url: https://api.cf.haas-02.pcf.vmware.com
+          base_url: https://api.pcf.vmware.com
           basic_auth_username: d7bb08be870f89c4d4fc
           basic_auth_password: a575b2bb5934116c6337
           staging_upload_password: eaeb595e3283c55966e9
@@ -4071,7 +4071,7 @@ jobs:
         diego_credentials: ''
         cc:
           external_port: 9022
-        uaa_token_url: https://uaa.cf.haas-02.pcf.vmware.com/oauth/token
+        uaa_token_url: https://uaa.pcf.vmware.com/oauth/token
         uaa_secret: c41b7aa069a2015dfab6
       ssl:
         skip_cert_verify: true
@@ -4204,7 +4204,7 @@ jobs:
           staging_upload_user: staging_upload_user
         insecure_docker_registry_list: []
       tps:
-        traffic_controller_url: wss://doppler.cf.haas-02.pcf.vmware.com:443
+        traffic_controller_url: wss://doppler.pcf.vmware.com:443
         bbs:
           api_location: bbs.service.cf.internal:8889
           ca_cert: |
@@ -4848,10 +4848,10 @@ jobs:
       etcd:
         machines:
         - 10.146.63.134
-    system_domain: cf.haas-02.pcf.vmware.com
+    system_domain: pcf.vmware.com
     cc:
       bulk_api_password: d0a8cd5f35ff7e47339a
-      srv_api_uri: https://api.cf.haas-02.pcf.vmware.com
+      srv_api_uri: https://api.pcf.vmware.com
   update:
     max_in_flight: 1
 - name: loggregator_trafficcontroller-partition
@@ -4878,8 +4878,8 @@ jobs:
         machines:
         - 10.146.63.134
     cc:
-      srv_api_uri: https://api.cf.haas-02.pcf.vmware.com
-    system_domain: cf.haas-02.pcf.vmware.com
+      srv_api_uri: https://api.pcf.vmware.com
+    system_domain: pcf.vmware.com
     traffic_controller:
       zone: 435c4ba9eb6b98368ae3
     ssl:
@@ -4911,12 +4911,12 @@ jobs:
         port: 8081
         registration_interval: 20s
         uris:
-        - doppler.cf.haas-02.pcf.vmware.com
+        - doppler.pcf.vmware.com
       - name: loggregator
         port: 8080
         registration_interval: 20s
         uris:
-        - loggregator.cf.haas-02.pcf.vmware.com
+        - loggregator.pcf.vmware.com
   update:
     max_in_flight: 1
 - name: push-apps-manager
@@ -4933,24 +4933,24 @@ jobs:
     - gateway
   properties:
     cf:
-      api_url: https://api.cf.haas-02.pcf.vmware.com
+      api_url: https://api.pcf.vmware.com
       admin_username: push_apps_manager
       admin_password: a9b4e0ba6c2df2a1d88d
-      system_domain: cf.haas-02.pcf.vmware.com
+      system_domain: pcf.vmware.com
     services:
       authentication:
         CF_CLIENT_ID: portal
         CF_CLIENT_SECRET: f29b4110c14d9ddd1330
-        CF_LOGIN_SERVER_URL: https://login.cf.haas-02.pcf.vmware.com
-        CF_UAA_SERVER_URL: https://uaa.cf.haas-02.pcf.vmware.com
+        CF_LOGIN_SERVER_URL: https://login.pcf.vmware.com
+        CF_UAA_SERVER_URL: https://uaa.pcf.vmware.com
     env:
       secret_token: c927c1d345939c6f888b
-      cf_cc_api_url: https://api.cf.haas-02.pcf.vmware.com
-      cf_loggregator_http_url: http://loggregator.cf.haas-02.pcf.vmware.com
-      cf_console_url: https://apps.cf.haas-02.pcf.vmware.com
-      cf_notifications_service_url: https://notifications.cf.haas-02.pcf.vmware.com
+      cf_cc_api_url: https://api.pcf.vmware.com
+      cf_loggregator_http_url: http://loggregator.pcf.vmware.com
+      cf_console_url: https://apps.pcf.vmware.com
+      cf_notifications_service_url: https://notifications.pcf.vmware.com
       default_from: pez-admin@pivotal.io
-      usage_service_host: https://app-usage.cf.haas-02.pcf.vmware.com
+      usage_service_host: https://app-usage.pcf.vmware.com
       bundle_without: test development hosted_only
       apps_manager_version: 1.4.1.0
       enable_internal_user_store: true
@@ -5010,8 +5010,8 @@ jobs:
     - gateway
   properties:
     smoke_tests:
-      api: https://api.cf.haas-02.pcf.vmware.com
-      apps_domain: cf.haas-02.pcf.vmware.com
+      api: https://api.pcf.vmware.com
+      apps_domain: pcf.vmware.com
       user: smoke_tests
       password: be1a2ef48ac09ca2dd76
       org: CF_SMOKE_TEST_ORG
@@ -5034,11 +5034,11 @@ jobs:
     - dns
     - gateway
   properties:
-    domain: cf.haas-02.pcf.vmware.com
+    domain: pcf.vmware.com
     ssl:
       skip_cert_verify: true
     notifications:
-      app_domain: cf.haas-02.pcf.vmware.com
+      app_domain: pcf.vmware.com
       network: notifications
       sender: pez-admin@pivotal.io
       encryption_key: ab9ea14b71f950decc13
@@ -5090,12 +5090,12 @@ jobs:
     - dns
     - gateway
   properties:
-    domain: cf.haas-02.pcf.vmware.com
+    domain: pcf.vmware.com
     notifications:
       cf:
         admin_user: admin
         admin_password: admin
-      app_domain: cf.haas-02.pcf.vmware.com
+      app_domain: pcf.vmware.com
       uaa:
         admin_client_id: admin
         admin_client_secret: e0789d9433838b7d3449
@@ -5116,13 +5116,13 @@ jobs:
     - dns
     - gateway
   properties:
-    domain: cf.haas-02.pcf.vmware.com
+    domain: pcf.vmware.com
     ssl:
       skip_cert_verify: true
     notifications_ui:
       organization: system
       space: notifications-with-ui
-      app_domain: cf.haas-02.pcf.vmware.com
+      app_domain: pcf.vmware.com
       network: notifications
       syslog_url: 514
       encryption_key: ab9ea14b71f950decc13
@@ -5151,12 +5151,12 @@ jobs:
     - dns
     - gateway
   properties:
-    domain: cf.haas-02.pcf.vmware.com
+    domain: pcf.vmware.com
     notifications_ui:
       cf:
         admin_user: admin
         admin_password: admin
-      app_domain: cf.haas-02.pcf.vmware.com
+      app_domain: pcf.vmware.com
       uaa:
         admin_client_id: admin
         admin_client_secret: e0789d9433838b7d3449
@@ -5178,7 +5178,7 @@ jobs:
     - gateway
   properties:
     app_domains:
-    - cf.haas-02.pcf.vmware.com
+    - pcf.vmware.com
     autoscale:
       broker:
         user: 64d82a39f20eee31
@@ -5191,10 +5191,10 @@ jobs:
         url: mysql://af54c1cc36e066806649:e28b0bc8d6fe5f23494a@10.146.63.157:3306/autoscale
       encryption_key: 32c62e9ee19f2a48
       enable_diego: true
-      notifications_host: https://notifications.cf.haas-02.pcf.vmware.com
+      notifications_host: https://notifications.pcf.vmware.com
       organization: system
       space: autoscaling
-    domain: cf.haas-02.pcf.vmware.com
+    domain: pcf.vmware.com
     ssl:
       skip_cert_verify: true
     uaa:
@@ -5217,7 +5217,7 @@ jobs:
     - gateway
   properties:
     app_domains:
-    - cf.haas-02.pcf.vmware.com
+    - pcf.vmware.com
     autoscale:
       broker:
         user: 64d82a39f20eee31
@@ -5227,7 +5227,7 @@ jobs:
         admin_password: admin
       organization: system
       space: autoscaling
-    domain: cf.haas-02.pcf.vmware.com
+    domain: pcf.vmware.com
     ssl:
       skip_cert_verify: true
   update:
@@ -5254,7 +5254,7 @@ jobs:
         admin_password: admin
       organization: system
       space: autoscaling
-    domain: cf.haas-02.pcf.vmware.com
+    domain: pcf.vmware.com
     ssl:
       skip_cert_verify: true
   update:
@@ -5272,7 +5272,7 @@ jobs:
     - dns
     - gateway
   properties:
-    domain: cf.haas-02.pcf.vmware.com
+    domain: pcf.vmware.com
     ssl:
       skip_cert_verify: true
     autoscale:
@@ -5295,8 +5295,8 @@ jobs:
     - gateway
   properties:
     acceptance_tests:
-      api: https://api.cf.haas-02.pcf.vmware.com
-      apps_domain: cf.haas-02.pcf.vmware.com
+      api: https://api.pcf.vmware.com
+      apps_domain: pcf.vmware.com
       admin_user: admin
       admin_password: admin
       include_logging: true
@@ -5328,8 +5328,8 @@ jobs:
     - gateway
   properties:
     acceptance_tests:
-      api: https://api.cf.haas-02.pcf.vmware.com
-      apps_domain: cf.haas-02.pcf.vmware.com
+      api: https://api.pcf.vmware.com
+      apps_domain: pcf.vmware.com
       admin_user: admin
       admin_password: admin
       include_logging: true

@@ -70,7 +70,7 @@ gateway_new='10.146.63.253'
 dns_old='10.65.162.2'
 dns_new='10.146.63.249'
 
-domain_old='pez.pivotal.io'
+domain_old='cf.haas-02.pez.pivotal.io'
 domain_new='pcf.vmware.com'
 
 sed -e "s|$static_old|$static_new|" \
@@ -96,5 +96,5 @@ sed -e "s|$static_old|$static_new|" \
 -e "s|$subnet_old|$subnet_new|" \
 -e "s|$gateway_old|$gateway_new|" \
 -e "s|$dns_old|$dns_new|" \
--e "s|$domain_old|$domain_new|" \
+-e "s|$domain_old|$domain_new|g" \
 cf-pezlab.yml > cf-vmwarelab.yml
