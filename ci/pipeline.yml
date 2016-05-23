@@ -215,7 +215,7 @@ jobs:
     passed: [p2-task2-Upload-PCF]
   - get: deploy-photon
     trigger: false
-  - task: p2-3-deploy-ERT
+  - task: p2-3-1-deploy-ERT
     config:
       platform: linux
       image: docker:///virtmerlin/deploy-worker
@@ -231,3 +231,16 @@ jobs:
         bosh_deployment_passwd: {{bosh_deployment_passwd}}
         pcf_manifest: {{pcf_manifest}}
         cli_url: {{cli_url}}
+
+  - task: p2-3-2-test-ERT
+    config:
+      platform: linux
+      image: docker:///virtmerlin/deploy-worker
+      inputs:
+        - name: deploy-photon
+      run:
+        path: deploy-photon/ci/tasks/run-errands.sh
+      params:
+        bosh_deployment_network_ip: {{bosh_deployment_network_ip}}
+        bosh_deployment_user: {{bosh_deployment_user}}
+        bosh_deployment_passwd: {{bosh_deployment_passwd}}
