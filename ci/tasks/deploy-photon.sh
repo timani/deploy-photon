@@ -1,6 +1,10 @@
 #!/bin/bash
 set -e
 
+# Download Photon CLI
+my_dir="$(dirname "$0")"
+"$my_dir/download-cli.sh"
+
 photon target set http://${ova_ip}:9000
 
 #Destory Existing Deployments

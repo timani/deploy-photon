@@ -1,6 +1,10 @@
 #!/bin/bash
 set -e
 
+# Download Photon CLI
+my_dir="$(dirname "$0")"
+"$my_dir/download-cli.sh"
+
 #### Build the Photon CPI and get sha1
 echo "Building Photon CPI ..."
 if [[ $photon_release == "latest" || -z $photon_release ]]; then

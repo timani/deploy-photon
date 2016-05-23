@@ -80,6 +80,9 @@ photon_manifest: photon-pezlab.yml
 # Param for which CPI to build : example [latest|0.8.0|0.8.0.u1|0.9.0]
 photon_release: latest
 
+# Param for Photon Platform CLI download url
+cli_url: [cli download url]
+
 # Params for Photon Platform auth user
 photon_user: dev
 photon_passwd: photon

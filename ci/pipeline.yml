@@ -134,6 +134,7 @@ jobs:
         photon_manifest: {{photon_manifest}}
         photon_tenant: {{photon_tenant}}
         photon_project: {{photon_project}}
+        cli_url: {{cli_url}}
 
 - name: p2-task1-Deploy-BOSH
   serial: true
@@ -173,6 +174,7 @@ jobs:
         photon_ignore_cert: {{photon_ignore_cert}}
         photon_tenant: {{photon_tenant}}
         photon_project: {{photon_project}}
+        cli_url: {{cli_url}}
 
 - name: p2-task2-Upload-PCF
   serial: true
