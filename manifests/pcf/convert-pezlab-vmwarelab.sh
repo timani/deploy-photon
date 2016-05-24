@@ -68,7 +68,7 @@ gateway_old='10.65.170.1'
 gateway_new='10.146.63.253'
 
 dns_old='10.65.162.2'
-dns_new='10.132.71.1'
+dns_new='10.146.63.249'
 
 domain_old='pez.pivotal.io'
 domain_new='pcf.vmware.com'
