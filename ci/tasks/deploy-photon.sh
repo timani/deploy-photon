@@ -8,7 +8,7 @@ my_dir="$(dirname "$0")"
 photon target set http://${ova_ip}:9000
 
 #Destory Existing Deployments
-if (( $(photon -n deployment list | head -1) > 0 )); then
+if (( $(photon -n deployment list | wc -l) > 0 )); then
     photon system destroy
 fi
 
