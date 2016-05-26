@@ -9,15 +9,15 @@ releases:
 - name: service-backup
   version: '1'
 - name: cf
-  version: '235'
+  version: '235.3.1'
 - name: cflinuxfs2-rootfs
-  version: 0.2.0
+  version: 1.3.0
 - name: diego
   version: 0.1467.0
 - name: garden-linux
   version: 0.337.0
 - name: etcd
-  version: '45'
+  version: '48'
 - name: push-apps-manager-release
   version: '621'
 - name: notifications
