@@ -134,6 +134,8 @@ jobs:
         photon_manifest: {{photon_manifest}}
         photon_tenant: {{photon_tenant}}
         photon_project: {{photon_project}}
+        photon_user: {{photon_user}}
+        photon_passwd: {{photon_passwd}}
         cli_url: {{cli_url}}
 
 - name: p2-task1-Deploy-BOSH
@@ -225,6 +227,8 @@ jobs:
         path: deploy-photon/ci/tasks/deploy-pcf.sh
       params:
         ova_ip: {{ova_ip}}
+        photon_user: {{photon_user}}
+        photon_passwd: {{photon_passwd}}
         bosh_deployment_network: {{bosh_deployment_network}}
         bosh_deployment_network_ip: {{bosh_deployment_network_ip}}
         bosh_deployment_user: {{bosh_deployment_user}}

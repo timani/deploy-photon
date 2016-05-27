@@ -20,8 +20,13 @@ sleep 180
 #Target Photon Controller
 PHOTON_CTRL_ID=$(photon deployment list | head -3 | tail -1)
 PHOTON_CTRL_IP=$(photon deployment show $PHOTON_CTRL_ID | grep -E "LoadBalancer.*28080" | awk -F " " '{print$2}')
-
-photon target set http://${PHOTON_CTRL_IP}:9000
+AUTH_ENABLED=$(photon -n deployment show $PHOTON_CTRL_ID | sed -n 2p | awk '{print $1;}')
+if [ $AUTH_ENABLED == "false" ]; then
+    photon target set http://${PHOTON_CTRL_IP}:9000
+else
+    photon -n target set -c https://${PHOTON_CTRL_IP}:443
+    photon -n target login -u "$photon_user" -p "$photon_passwd"
+fi
 
 ##Create Tenant
 photon -n tenant create $photon_tenant
