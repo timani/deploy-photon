@@ -53,8 +53,8 @@ BOSH_DEPLOYMENT_NETWORK_SUBNET_REGEX=$(echo $bosh_deployment_network_subnet | se
 
 perl -pi -e "s/PHOTON_PROJ_ID/$PHOTON_PROJ_ID/g" /tmp/bosh.yml
 perl -pi -e "s/PHOTON_CTRL_IP/$PHOTON_CTRL_IP/g" /tmp/bosh.yml
-perl -pi -e "s/PHOTON_USER/$photon_user/g" /tmp/bosh.yml
-perl -pi -e "s/PHOTON_PASSWD/$photon_passwd/g" /tmp/bosh.yml
+perl -pi -e 's/PHOTON_USER/$ENV{photon_user}/g' /tmp/bosh.yml
+perl -pi -e 's/PHOTON_PASSWD/$ENV{photon_passwd}/g' /tmp/bosh.yml
 perl -pi -e "s/PHOTON_IGNORE_CERT/$photon_ignore_cert/g" /tmp/bosh.yml
 perl -pi -e "s/PHOTON_TENANT/$photon_tenant/g" /tmp/bosh.yml
 perl -pi -e "s/CPI_SHA1/$CPI_SHA1/g" /tmp/bosh.yml
