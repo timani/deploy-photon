@@ -1,4 +1,13 @@
 resources:
+- name: after-midnight
+  type: time
+  source:
+    timezone: America/Los_Angeles
+    days:
+      - Thursday
+    start: 12:00 AM
+    stop: 1:00 AM
+
 - name: deploy-photon
   type: git
   source:
@@ -12,7 +21,6 @@ resources:
     uri: git@github.com:vmware/bosh-photon-cpi-release.git
     branch: develop
     private_key: {{githubsshkey}}
-
 
 - name: photon-run-id
   type: semver
@@ -53,6 +61,8 @@ jobs:
   serial_groups: [full]
   plan:
   - aggregate:
+    - get: after-midnight
+      trigger: true
     - get: deploy-photon
       trigger: false
     - get: photon-run-id
