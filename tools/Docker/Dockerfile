@@ -62,5 +62,11 @@ ADD VMware-ovftool-4.1.0-2459827-lin.x86_64.bundle /tmp/
 RUN yes | /bin/bash /tmp/VMware-ovftool-4.1.0-2459827-lin.x86_64.bundle --required --console && \
     rm -f /tmp/VMware-ovftool-4.1.0-2459827-lin.x86_64.bundle
 
+# Install Azure CLI
+RUN curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
+RUN apt-get -y install git nodejs
+RUN npm install azure-cli -g
+RUN yes | azure
+
 # Exec cmd for Docker container
 CMD ["/bin/bash"]
